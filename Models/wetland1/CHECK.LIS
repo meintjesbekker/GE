@@ -1,0 +1,67 @@
+The following data will be checked:
+1. Geometrical setup of the model
+   Layer thickness
+   Top and bottom elevation of the layers
+   Starting head at constant head cells
+2. Time-independent data (if used)
+   Horizontal hydraulic conductivity or Transmissivity: zero or negative values 
+   Vertical hydraulic conductivity or Leakance: zero or negative values 
+   Storage coefficient, specific storage or specific yield: negative values 
+   Effective porosity: zero or negative values 
+3. Time-dependent data (if used)
+   River package: 
+      >Conflicts with constant head cells and inactive cells
+      >Elevation of the river bed versus the elevation of the cell bottom
+      >Elevation of the river bed versus river stage
+   Drain package
+      >Conflicts with constant head cells and inactive cells
+      >Elevation of the drain versus the elevation of the cell bottom
+   General-head boundary package
+      >Conflicts with constant head cells and inactive cells
+   Streamflow Routing package
+      >Conflicts with constant head cells and inactive cells
+   Well package
+      >Conflicts with constant head cells and inactive cells
+
+
+LAYER: 1   TYPE: 1
+--------------------------------------------------------------------------------
+>>>GEOMETRICAL SETUP
+>>Thickness of layers: 
+  --- OK --- all values are positive.
+>>Top and Bottom elevations:
+  --- OK --- no cut through found.
+>>Starting head of constant head cells:
+  --- OK --- all head values are higher than cell bottom.
+
+>>>TIME-INDEPENDENT DATA:
+>>Vertical Hydraulic conductivity
+  --- OK ---
+>>Effective porosity
+  --- OK ---
+
+>>>TIME-DEPENDENT DATA:
+
+>>Period:  1 
+ >WEL1 Package:
+  --- OK ---
+
+LAYER: 2   TYPE: 3
+--------------------------------------------------------------------------------
+>>>GEOMETRICAL SETUP
+>>Thickness of layers: 
+  --- OK --- all values are positive.
+>>Top and Bottom elevations:
+  --- OK --- no cut through found.
+>>Starting head of constant head cells:
+  --- OK --- all head values are higher than cell bottom.
+
+>>>TIME-INDEPENDENT DATA:
+>>Effective porosity
+  --- OK ---
+
+>>>TIME-DEPENDENT DATA:
+
+>>Period:  1 
+ >WEL1 Package:
+  --- OK ---

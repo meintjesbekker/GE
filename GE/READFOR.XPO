@@ -1,0 +1,4 @@
+-export    HEADTIME@40
+-export    READHEAD@40
+-export    CONTIME@32
+-export    READCON@36
