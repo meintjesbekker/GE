@@ -51,7 +51,7 @@ void CMapper::CreateMapper(vtkPolyData* pcPolyData,
 	if (m_pcPolyDataMapper) 
 		m_pcPolyDataMapper->Delete();
 	m_pcPolyDataMapper = vtkPolyDataMapper::New();
-	m_pcPolyDataMapper->SetInput(pcPolyData);
+	m_pcPolyDataMapper->SetInputData(pcPolyData);
 	if (pcLookupTable)
 	{
 		m_pcPolyDataMapper->SetScalarModeToUsePointData();
@@ -72,7 +72,7 @@ void CMapper::CreateDataSetMapper(	vtkDataSet* pcDataSet,
 	if (m_pcDataSetMapper) 
 		m_pcDataSetMapper->Delete();
 	m_pcDataSetMapper = vtkDataSetMapper::New();
-	m_pcDataSetMapper->SetInput(pcDataSet);
+	m_pcDataSetMapper->SetInputData(pcDataSet);
 	if (pcLookupTable)
 	{
 		m_pcDataSetMapper->SetScalarModeToUsePointData();

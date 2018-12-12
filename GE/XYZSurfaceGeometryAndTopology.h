@@ -35,8 +35,8 @@ protected:
 	float m_fMaximumValue;
 
 	// vtk
-	vtkFloatPoints* m_pcFloatPoints;
-	vtkScalars* m_pcScalars;
+	vtkPoints* m_pcFloatPoints;
+	vtkDoubleArray* m_pcScalars;
 	vtkDelaunay2D* m_pcDelaunay2D;
 };
 

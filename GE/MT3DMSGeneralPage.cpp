@@ -97,7 +97,7 @@ BOOL CMT3DMSGeneralPage::OnInitDialog()
 		m_cSpeciesNumberComboBox.AddString(str);
 	}
 	m_cSpeciesNumberComboBox.SetCurSel(m_pcMT3DMS->GetSpecyIndex());
-	for (i = 0; i < m_pcMT3DMS->GetNumberOfTimeIntervals(); i++)
+	for (int i = 0; i < m_pcMT3DMS->GetNumberOfTimeIntervals(); i++)
 	{
 		CString str;
 		str.Format("%lf", m_pcMT3DMS->GetTotalElapsedTime(i));

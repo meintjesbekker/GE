@@ -187,7 +187,7 @@ void CXYZSurface::CreateDataSet()
 	m_pcPolyData = vtkPolyData::New();
 	m_pcPolyData->SetPoints(m_pcFloatPoints);
 	m_pcPolyData->GetPointData()->SetScalars(m_pcScalars);
-	m_pcPolyData->Update();
+	m_pcPolyData->Modified();
 }
 
 /*--------------------------------------------------------------------------*/

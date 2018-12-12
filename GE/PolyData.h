@@ -25,7 +25,7 @@ public:
 
 // protected operations
 protected:
-	virtual void CreatePolyData(vtkFloatPoints* pcFloatPoints, vtkCellArray* pcCellArray, vtkScalars* pcScalars = NULL);
+	virtual void CreatePolyData(vtkPoints* pcFloatPoints, vtkCellArray* pcCellArray, vtkDoubleArray* pcScalars = NULL);
 
 // protected attribute
 protected:

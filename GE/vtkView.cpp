@@ -147,12 +147,20 @@ void CVtkView::OnDraw(CDC* pDC)
 			rcDest.right = cxPage;
 			rcDest.top = fabs(cxPage * cyInch * cyDIB) / fabs(cxInch * cxDIB);
 		} 
+
+		// TODO: Fix this.
+		/*
 		CRect rcDestLP(rcDest);
 		pDC->DPtoLP(rcDestLP);
-		m_RenderWindow->SetupMemoryRendering(	rcDest.right / scale,
-												rcDest.top / scale,
-												pDC->m_hAttribDC);
+		// m_RenderWindow->SetupMemoryRendering(rcDest.right / scale,
+		//	 									rcDest.top / scale,
+		//	 									pDC->m_hAttribDC);
+		
+		m_RenderWindow->SetUseOffScreenBuffers(true);
 		m_RenderWindow->Render();
+		*/
+
+		/*
 		pDC->SetStretchBltMode(HALFTONE);
 		StretchBlt(	pDC->GetSafeHdc(),
 					0,
@@ -166,6 +174,52 @@ void CVtkView::OnDraw(CDC* pDC)
 					rcDest.top / scale, 
 					SRCCOPY);
 		m_RenderWindow->ResumeScreenRendering();
+		*/
+		/*
+		unsigned char *pixels =
+			this->m_RenderWindow->GetPixelData(0, 0, size[0] - 1, size[1] - 1, 0);
+
+		// now copy he result to the HDC
+		int dataWidth = ((cxWindow * 3 + 3) / 4) * 4;
+
+		BITMAPINFO MemoryDataHeader;
+		MemoryDataHeader.bmiHeader.biSize = 40;
+		MemoryDataHeader.bmiHeader.biWidth = cxWindow;
+		MemoryDataHeader.bmiHeader.biHeight = cyWindow;
+		MemoryDataHeader.bmiHeader.biPlanes = 1;
+		MemoryDataHeader.bmiHeader.biBitCount = 24;
+		MemoryDataHeader.bmiHeader.biCompression = BI_RGB;
+		MemoryDataHeader.bmiHeader.biClrUsed = 0;
+		MemoryDataHeader.bmiHeader.biClrImportant = 0;
+		MemoryDataHeader.bmiHeader.biSizeImage = dataWidth * cyWindow;
+		MemoryDataHeader.bmiHeader.biXPelsPerMeter = 10000;
+		MemoryDataHeader.bmiHeader.biYPelsPerMeter = 10000;
+
+		unsigned char *MemoryData;    // the data in the DIBSection
+		HDC MemoryHdc = (HDC)CreateCompatibleDC(pDC->GetSafeHdc());
+		HBITMAP dib = CreateDIBSection(MemoryHdc,
+			&MemoryDataHeader, DIB_RGB_COLORS,
+			(void **)(&(MemoryData)), NULL, 0);
+
+		// copy the pixels over
+		for (int i = 0; i < cyWindow; i++)
+		{
+			for (int j = 0; j < cxWindow; j++)
+			{
+				MemoryData[i*dataWidth + j * 3] = pixels[i*cxWindow * 3 + j * 3 + 2];
+				MemoryData[i*dataWidth + j * 3 + 1] = pixels[i*cxWindow * 3 + j * 3 + 1];
+				MemoryData[i*dataWidth + j * 3 + 2] = pixels[i*cxWindow * 3 + j * 3];
+			}
+		}
+
+		// Put the bitmap into the device context
+		SelectObject(MemoryHdc, dib);
+		StretchBlt(pDC->GetSafeHdc(), 0, 0, x, y, MemoryHdc, 0, 0, cxWindow, cyWindow, SRCCOPY);
+
+		this->m_RenderWindow->SetUseOffScreenBuffers(false);
+		delete[] pixels;
+		*/
+
 		EndWaitCursor();
 	}
 	else
@@ -192,7 +246,7 @@ void CVtkView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 {
 	if (GetDocument()->m_pcModel == NULL || !GetDocument()->GetViewOpened())
 	{
-		m_Renderer->GetProps()->RemoveAllItems();
+		m_Renderer->RemoveAllViewProps();
 		m_RenderWindow->RemoveRenderer(m_Renderer);
 		if (m_Renderer)
 			m_Renderer->Delete();
@@ -204,7 +258,7 @@ void CVtkView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 	}
 	if (GetDocument()->m_pcModel)
 	{
-		m_Renderer->GetProps()->RemoveAllItems();
+		m_Renderer->RemoveAllViewProps();
 
 		// visualization object
 		for (int i = 0; i < GetDocument()->m_pcVisualization->m_pcVisualizationObjectArray.GetSize(); i++)
@@ -445,7 +499,7 @@ void CVtkView::CreateLabeledAxes()
 		m_OutlinePolyDataMapper = NULL;
 	}
 	m_OutlinePolyDataMapper = vtkPolyDataMapper::New();
-	m_OutlinePolyDataMapper->SetInput(m_OutlineSource->GetOutput());
+	m_OutlinePolyDataMapper->SetInputData(m_OutlineSource->GetOutput());
 	m_OutlineActor = vtkActor::New();
 	m_OutlineActor->SetMapper(m_OutlinePolyDataMapper);
 	m_OutlineActor->GetProperty()->SetColor(0, 0, 0);
@@ -459,9 +513,10 @@ void CVtkView::CreateLabeledAxes()
 		m_CubeAxesActor2D = NULL;
 	}
 	m_CubeAxesActor2D = vtkCubeAxesActor2D::New();
-	m_CubeAxesActor2D->SetProp(m_OutlineActor);
+	// TODO: Fix the following line.
+	// m_CubeAxesActor2D->SetProp(m_OutlineActor);
 	m_CubeAxesActor2D->SetCamera(m_Renderer->GetActiveCamera());
-	m_CubeAxesActor2D->ShadowOn();
+	// TODO: m_CubeAxesActor2D->ShadowOn();
 	m_CubeAxesActor2D->SetFlyModeToClosestTriad();
 	m_CubeAxesActor2D->SetXAxisVisibility(GetDocument()->m_pcModel->GetXVisible());
 	m_CubeAxesActor2D->SetYAxisVisibility(GetDocument()->m_pcModel->GetYVisible());
@@ -474,7 +529,7 @@ void CVtkView::CreateLabeledAxes()
 	float green = GetGValue(GetDocument()->m_pcModel->GetColor()) / 255.0;
 	float blue = GetBValue(GetDocument()->m_pcModel->GetColor()) / 255.0;
 	m_CubeAxesActor2D->GetProperty()->SetColor(red, green, blue);
-	m_Renderer->AddProp(m_CubeAxesActor2D);
+	m_Renderer->AddViewProp(m_CubeAxesActor2D);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -498,7 +553,7 @@ void CVtkView::CreateColoredAxes()
 		m_pTubeFilter = NULL;
 	}
 	m_pTubeFilter = vtkTubeFilter::New();
-    m_pTubeFilter->SetInput(m_pAxes->GetOutput());
+    m_pTubeFilter->SetInputData(m_pAxes->GetOutput());
     m_pTubeFilter->SetRadius(m_pAxes->GetScaleFactor()/25.0);
     m_pTubeFilter->SetNumberOfSides(6);
 	if (m_pPolyDataMapper)
@@ -507,7 +562,7 @@ void CVtkView::CreateColoredAxes()
 		m_pPolyDataMapper = NULL;
 	}
 	m_pPolyDataMapper = vtkPolyDataMapper::New();
-	m_pPolyDataMapper->SetInput(m_pTubeFilter->GetOutput());
+	m_pPolyDataMapper->SetInputData(m_pTubeFilter->GetOutput());
 	if (m_pAxesActor)
 	{
 		m_pAxesActor->Delete();
@@ -516,7 +571,7 @@ void CVtkView::CreateColoredAxes()
 	m_pAxesActor = vtkActor::New();
 	m_pAxesActor->SetMapper(m_pPolyDataMapper);
 	m_pAxesActor->SetScale(1, 1, 1);
-	m_Renderer->AddProp(m_pAxesActor);
+	m_Renderer->AddViewProp(m_pAxesActor);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -571,6 +626,8 @@ void CVtkView::OnEditCopy()
 	// open clipboard
 	if (OpenClipboard())
 	{
+		// TODO: Fix copy.
+		/*
 		BeginWaitCursor();
 		EmptyClipboard();
 		dwLen = sizeof(BITMAPINFOHEADER) + dataWidth*size[1];
@@ -597,5 +654,6 @@ void CVtkView::OnEditCopy()
 		CloseClipboard();
 		m_RenderWindow->ResumeScreenRendering();
 		EndWaitCursor();
+		*/
 	}			
 }

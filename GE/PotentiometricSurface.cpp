@@ -321,7 +321,7 @@ void CPotentiometricSurface::InsertNormalPointsAndScalars(int iRowIndex, int iCo
 
 	// Insert 4 scalars into scalar array, using the 4, point indexes and head value.
 	for (int iIndex = 0; iIndex < 4; iIndex++)
-		m_pcScalars->SetScalar(iTopPoint[iIndex], fHead);
+		m_pcScalars->SetValue(iTopPoint[iIndex], fHead);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -339,7 +339,7 @@ void CPotentiometricSurface::CreateNormalGeometryAndScalarDatasetAttribute()
 	CreateScalarArray();
 
 	// Set the size of the scalar array = 4 * number of rows * number of columns.
-	m_pcScalars->SetNumberOfScalars(4 * m_pcModel->GetNumberOfRows() * m_pcModel->GetNumberOfColumns());
+	m_pcScalars->SetNumberOfValues(4 * m_pcModel->GetNumberOfRows() * m_pcModel->GetNumberOfColumns());
 	
 	// head
 	float fHead;
@@ -394,7 +394,7 @@ void CPotentiometricSurface::CreateAveragePoints()
 	}
 
 	// For number of rows.
-	for (i = 0; i < m_pcModel->GetNumberOfRows(); i++)
+	for (int i = 0; i < m_pcModel->GetNumberOfRows(); i++)
 		// For number of columns.
 		for (int j = 0; j < m_pcModel->GetNumberOfColumns(); j++)
 			// If it is an active cell and head value is in Color Table range.
@@ -422,7 +422,7 @@ void CPotentiometricSurface::CreateAverageGeometryAndScalarDatasetAttribute()
 	CreateScalarArray();
 	
 	// Set the size of the scalar array = (number of rows + 1) * (number of columns + 1).
-	m_pcScalars->SetNumberOfScalars((m_pcModel->GetNumberOfRows() + 1) * (m_pcModel->GetNumberOfColumns() + 1));
+	m_pcScalars->SetNumberOfValues((m_pcModel->GetNumberOfRows() + 1) * (m_pcModel->GetNumberOfColumns() + 1));
 
 	// For indexes in point array.
 	for (int i = 0; i < (m_pcModel->GetNumberOfRows() + 1) * (m_pcModel->GetNumberOfColumns() + 1); i++)
@@ -438,7 +438,7 @@ void CPotentiometricSurface::CreateAverageGeometryAndScalarDatasetAttribute()
 										m_pcAverageArray.GetAt(i)->GetAverage());
 
 		// Insert average groundwater head into the scalar array.
-		m_pcScalars->SetScalar(i, m_pcAverageArray.GetAt(i)->GetAverage());
+		m_pcScalars->SetValue(i, m_pcAverageArray.GetAt(i)->GetAverage());
 	}
 }
 
@@ -522,7 +522,7 @@ void CPotentiometricSurface::CreateScalarArray()
 {
 	if (m_pcScalars)
 		m_pcScalars->Delete();
-	m_pcScalars = vtkScalars::New();
+	m_pcScalars = vtkDoubleArray::New();
 }
 
 /*--------------------------------------------------------------------------*/
@@ -537,7 +537,7 @@ void CPotentiometricSurface::GetHeadsFileName(char cName[180])
 		cName[iIndex] = ' ';
 	
 	// assign string to char
-	for (iIndex = 0; iIndex < str.GetLength(); iIndex++)
+	for (int iIndex = 0; iIndex < str.GetLength(); iIndex++)
 		cName[iIndex] = str[iIndex];
 }
 

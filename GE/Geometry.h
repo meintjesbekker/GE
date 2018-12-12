@@ -39,7 +39,7 @@ protected:
 	void CreateMiddleGeometry(int iNumberOfPoints = 1);
 	
 	// get the float points
-	vtkFloatPoints* GetFloatPoints() {return m_pcFloatPoints;};
+	vtkPoints* GetFloatPoints() {return m_pcFloatPoints;};
 
 // private operations
 private:
@@ -54,8 +54,8 @@ protected:
 	float m_fMaximumValue;
 
 	// vtk
-	vtkScalars*	m_pcScalars;
-	vtkFloatPoints*	m_pcFloatPoints;
+	vtkDoubleArray*	m_pcScalars;
+	vtkPoints*	m_pcFloatPoints;
 };
 
 #endif // !defined(AFX_GEOMETRY_H__F98F40A4_7B81_11D4_B2F3_0060084B410C__INCLUDED_)

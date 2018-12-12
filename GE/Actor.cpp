@@ -91,7 +91,7 @@ void CActor::SetActorProperties(vtkActor* pcActor, vtkMapper* pcMapper, BOOL bVi
 		float fBlue = GetBValue(cColor) / 255.0;
 		pcActor->GetProperty()->SetColor(fRed, fGreen, fBlue);
 	}
-	pcActor->Update();
+	pcActor->Modified();
 }
 
 /*--------------------------------------------------------------------------*/
@@ -112,5 +112,5 @@ void CActor::UpdateActor(vtkActor* pcActor, BOOL bVisible, COLORREF cColor)
 	float fGreen = GetGValue(cColor) / 255.0;
 	float fBlue = GetBValue(cColor) / 255.0;
 	pcActor->GetProperty()->SetColor(fRed, fGreen, fBlue);
-	pcActor->Update();
+	pcActor->Modified();
 }

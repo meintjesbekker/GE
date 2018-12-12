@@ -100,7 +100,7 @@ void CPotentiometricSurfaceGeneralPage::OnSelChangeComboStressPeriod()
 	m_pcPotentiometricSurface->SetTimeStep(m_pcPotentiometricSurface->m_cTimeAndLayerParameter.GetStressPeriod(m_pcPotentiometricSurface->GetStressPeriod())->GetTimeStepFromIndex(0));
 	m_cComboTimeStep.SetCurSel(m_pcPotentiometricSurface->m_cTimeAndLayerParameter.GetStressPeriod(m_pcPotentiometricSurface->GetStressPeriod())->FindTimeStep(m_pcPotentiometricSurface->GetTimeStep()));
 	m_cComboLayer.ResetContent();
-	for (i = 0; i < m_pcPotentiometricSurface->m_cTimeAndLayerParameter.GetStressPeriod(m_pcPotentiometricSurface->GetStressPeriod())->GetTimeStep(m_pcPotentiometricSurface->GetTimeStep())->GetLayerArraySize(); i++)
+	for (int i = 0; i < m_pcPotentiometricSurface->m_cTimeAndLayerParameter.GetStressPeriod(m_pcPotentiometricSurface->GetStressPeriod())->GetTimeStep(m_pcPotentiometricSurface->GetTimeStep())->GetLayerArraySize(); i++)
 	{
 		CString str;
 		str.Format("%i", m_pcPotentiometricSurface->m_cTimeAndLayerParameter.GetStressPeriod(m_pcPotentiometricSurface->GetStressPeriod())->GetTimeStep(m_pcPotentiometricSurface->GetTimeStep())->GetLayerFromIndex(i));
@@ -151,14 +151,14 @@ BOOL CPotentiometricSurfaceGeneralPage::OnInitDialog()
 		m_cComboStressPeriod.AddString(str);
 	}
 	m_cComboStressPeriod.SetCurSel(m_pcPotentiometricSurface->m_cTimeAndLayerParameter.FindStressPeriod(m_pcPotentiometricSurface->GetStressPeriod()));
-	for (i = 0; i < m_pcPotentiometricSurface->m_cTimeAndLayerParameter.GetStressPeriod(m_pcPotentiometricSurface->GetStressPeriod())->GetTimeStepArraySize(); i++)
+	for (int i = 0; i < m_pcPotentiometricSurface->m_cTimeAndLayerParameter.GetStressPeriod(m_pcPotentiometricSurface->GetStressPeriod())->GetTimeStepArraySize(); i++)
 	{
 		CString str;
 		str.Format("%i", m_pcPotentiometricSurface->m_cTimeAndLayerParameter.GetStressPeriod(m_pcPotentiometricSurface->GetStressPeriod())->GetTimeStepFromIndex(i));
 		m_cComboTimeStep.AddString(str);
 	}
 	m_cComboTimeStep.SetCurSel(m_pcPotentiometricSurface->m_cTimeAndLayerParameter.GetStressPeriod(m_pcPotentiometricSurface->GetStressPeriod())->FindTimeStep(m_pcPotentiometricSurface->GetTimeStep()));
-	for (i = 0; i < m_pcPotentiometricSurface->m_cTimeAndLayerParameter.GetStressPeriod(m_pcPotentiometricSurface->GetStressPeriod())->GetTimeStep(m_pcPotentiometricSurface->GetTimeStep())->GetLayerArraySize(); i++)
+	for (int i = 0; i < m_pcPotentiometricSurface->m_cTimeAndLayerParameter.GetStressPeriod(m_pcPotentiometricSurface->GetStressPeriod())->GetTimeStep(m_pcPotentiometricSurface->GetTimeStep())->GetLayerArraySize(); i++)
 	{
 		CString str;
 		str.Format("%i", m_pcPotentiometricSurface->m_cTimeAndLayerParameter.GetStressPeriod(m_pcPotentiometricSurface->GetStressPeriod())->GetTimeStep(m_pcPotentiometricSurface->GetTimeStep())->GetLayerFromIndex(i));

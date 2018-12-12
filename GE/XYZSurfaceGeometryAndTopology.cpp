@@ -54,12 +54,12 @@ void CXYZSurfaceGeometryAndTopology::CreateGeometryAndScalarDatasetAttribute(CSt
 	// Create a point array.
 	if (m_pcFloatPoints) 
 		m_pcFloatPoints->Delete();
-	m_pcFloatPoints = vtkFloatPoints::New();
+	m_pcFloatPoints = vtkPoints::New();
 	
 	// Create a scalar array.
 	if (m_pcScalars) 
 		m_pcScalars->Delete();
-	m_pcScalars = vtkScalars::New();
+	m_pcScalars = vtkDoubleArray::New();
 	
 	ifstream waterLevelFile(sPathName, ios::in);
 	float xyz[3];
@@ -78,7 +78,7 @@ void CXYZSurfaceGeometryAndTopology::CreateGeometryAndScalarDatasetAttribute(CSt
 			m_pcFloatPoints->InsertNextPoint(xyz);
 			
 			// Insert z coordinate as a scalar into scalar array.
-			m_pcScalars->InsertNextScalar(xyz[2]);
+			m_pcScalars->InsertNextValue(xyz[2]);
 		}
 	}
 	waterLevelFile.close();
@@ -92,6 +92,6 @@ void CXYZSurfaceGeometryAndTopology::Triangulate(vtkPolyData* pcPolyData)
 	if (m_pcDelaunay2D) 
 		m_pcDelaunay2D->Delete();
 	m_pcDelaunay2D = vtkDelaunay2D::New();
-	m_pcDelaunay2D->SetInput(pcPolyData);
+	m_pcDelaunay2D->SetInputData(pcPolyData);
 	m_pcDelaunay2D->Update();
 }

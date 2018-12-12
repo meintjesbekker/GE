@@ -136,7 +136,7 @@ void CGeometry::CreateMiddleGeometry(int iNumberOfPoints /* = 1 */)
 	// Create a point array.
 	if (m_pcFloatPoints) 
 		m_pcFloatPoints->Delete();
-	m_pcFloatPoints = vtkFloatPoints::New();
+	m_pcFloatPoints = vtkPoints::New();
 
 	// For all the model layers.
 	for (int iLayer = 1; iLayer <= m_pcModelInfo->GetNumberOfLayers(); iLayer++)
@@ -241,7 +241,7 @@ void CGeometry::CreateAveragePoints(int iLayer, int iLayerStartCellIndex /* = 0 
 	float* pfBottomArray = ReadTimeIndependentData("bot", iLayer);
 
 	// For number of rows.
-	for (i = 0; i < m_pcModelInfo->GetNumberOfRows(); i++)
+	for (int i = 0; i < m_pcModelInfo->GetNumberOfRows(); i++)
 		// For number of columns.
 		for (int j = 0; j < m_pcModelInfo->GetNumberOfColumns(); j++)
 			// If it is an active cell.
@@ -305,7 +305,7 @@ void CGeometry::InsertAveragePoints(int iRowIndex, int iColumnIndex, float* pfTo
 	CalculateBottomIndexes(iPTop, iPBottom, GetAverageNumberOfLayerPoints());
 
 	// Add the bottom elevation to the average point array, using the 4 bottom average point indexes.
-	for (iPointIndex = 0; iPointIndex < 4; iPointIndex++)
+	for (int iPointIndex = 0; iPointIndex < 4; iPointIndex++)
 		m_pcAverageArray[iPBottom[iPointIndex]]->AddToSum(pfBottomArray[iRowIndex * m_pcModelInfo->GetNumberOfColumns() + iColumnIndex]);
 }
 
@@ -316,5 +316,5 @@ void CGeometry::CreatePointArray()
 {
 	if (m_pcFloatPoints) 
 		m_pcFloatPoints->Delete();
-	m_pcFloatPoints = vtkFloatPoints::New();
+	m_pcFloatPoints = vtkPoints::New();
 }

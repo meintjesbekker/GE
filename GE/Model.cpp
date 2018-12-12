@@ -173,7 +173,7 @@ void CModel::ReadGeometryFile()
 		m_pfRowSpacing = NULL;
 	}
 	m_pfRowSpacing = new float[m_iNumbRows];
-	for (i = 0; i < m_iNumbRows; i++)
+	for (int i = 0; i < m_iNumbRows; i++)
 	{
 		gridGeometryFile >> fSpaceValue;
 		m_pfRowSpacing[i] = fSpaceValue;

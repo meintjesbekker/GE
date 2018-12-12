@@ -27,14 +27,14 @@ public:
 
 // protected operations
 protected:
-	void CreateTopolgy(BOOL bAverage, vtkScalars* pcScalars, CString sFolderAndFileName, CColor* pcColor);
-	void CreateNormalTopologyAndScalarDatasetAttribute(vtkScalars* pcScalars, CString sFolderAndFileName, CColor* pcColor);
-	void CreateAverageTopologyAndScalarDatasetAttribute(vtkScalars* pcScalars, CString sFolderAndFileName, CColor* pcColor);
+	void CreateTopolgy(BOOL bAverage, vtkDoubleArray* pcScalars, CString sFolderAndFileName, CColor* pcColor);
+	void CreateNormalTopologyAndScalarDatasetAttribute(vtkDoubleArray* pcScalars, CString sFolderAndFileName, CColor* pcColor);
+	void CreateAverageTopologyAndScalarDatasetAttribute(vtkDoubleArray* pcScalars, CString sFolderAndFileName, CColor* pcColor);
 	void InsertHexahedronCell(int iPTop[4], int iPBottom[4]);
 
 // private operations
 private:
-	void CreateNormalOrAverageTopology(	vtkScalars* pcScalars, 
+	void CreateNormalOrAverageTopology(	vtkDoubleArray* pcScalars, 
 										CString sFolderAndFileName, 
 										CColor* pcColor, 
 										int (CIndexes::*pFuncP0Index)(int, int) const, 

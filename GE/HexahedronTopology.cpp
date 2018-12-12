@@ -45,7 +45,7 @@ CHexahedronTopology::~CHexahedronTopology()
 /*--------------------------------------------------------------------------*/
 /* CreateTopolgy                                                            */
 /*--------------------------------------------------------------------------*/
-void CHexahedronTopology::CreateTopolgy(BOOL bAverage, vtkScalars* pcScalars, CString sFolderAndFileName, CColor* pcColor)
+void CHexahedronTopology::CreateTopolgy(BOOL bAverage, vtkDoubleArray* pcScalars, CString sFolderAndFileName, CColor* pcColor)
 {
 	if (bAverage)
 		CreateAverageTopologyAndScalarDatasetAttribute(pcScalars, sFolderAndFileName, pcColor);
@@ -56,7 +56,7 @@ void CHexahedronTopology::CreateTopolgy(BOOL bAverage, vtkScalars* pcScalars, CS
 /*--------------------------------------------------------------------------*/
 /* CreateNormalTopologyAndScalarDatasetAttribute                            */
 /*--------------------------------------------------------------------------*/
-void CHexahedronTopology::CreateNormalTopologyAndScalarDatasetAttribute(vtkScalars* pcScalars, CString sFolderAndFileName, CColor* pcColor)
+void CHexahedronTopology::CreateNormalTopologyAndScalarDatasetAttribute(vtkDoubleArray* pcScalars, CString sFolderAndFileName, CColor* pcColor)
 {
 	CreateNormalOrAverageTopology(	pcScalars,
 									sFolderAndFileName,
@@ -70,7 +70,7 @@ void CHexahedronTopology::CreateNormalTopologyAndScalarDatasetAttribute(vtkScala
 /*--------------------------------------------------------------------------*/
 /* CreateAverageTopologyAndScalarDatasetAttribute                           */
 /*--------------------------------------------------------------------------*/
-void CHexahedronTopology::CreateAverageTopologyAndScalarDatasetAttribute(vtkScalars* pcScalars, CString	sFolderAndFileName, CColor* pcColor)
+void CHexahedronTopology::CreateAverageTopologyAndScalarDatasetAttribute(vtkDoubleArray* pcScalars, CString	sFolderAndFileName, CColor* pcColor)
 {
 	CreateNormalOrAverageTopology(	pcScalars,
 									sFolderAndFileName,
@@ -101,7 +101,7 @@ void CHexahedronTopology::InsertHexahedronCell(int iPTop[4], int iPBottom[4])
 /*--------------------------------------------------------------------------*/
 /* CreateNormalOrAverageTopology                                            */
 /*--------------------------------------------------------------------------*/
-void CHexahedronTopology::CreateNormalOrAverageTopology(vtkScalars* pcScalars, 
+void CHexahedronTopology::CreateNormalOrAverageTopology(vtkDoubleArray* pcScalars, 
 														CString sFolderAndFileName, 
 														CColor* pcColor, 
 														int (CIndexes::*pFuncP0Index)(int, int) const,
@@ -149,7 +149,7 @@ void CHexahedronTopology::CreateNormalOrAverageTopology(vtkScalars* pcScalars,
 						InsertHexahedronCell(iPTop, iPBottom);
 						
 						// Insert parameter value into scalar pfParameterArray.
-						pcScalars->InsertNextScalar(pfParameterArray[i * m_pcModelInfo->GetNumberOfColumns() + j]);
+						pcScalars->InsertNextValue(pfParameterArray[i * m_pcModelInfo->GetNumberOfColumns() + j]);
 					}
 			delete [] pfParameterArray;
 		}

@@ -168,7 +168,7 @@ void CParameter::DoPipeline()
 	CreateGeometry();
 	if (m_pcScalars) 
 		m_pcScalars->Delete();
-  	m_pcScalars = vtkScalars::New();
+  	m_pcScalars = vtkDoubleArray::New();
 	CreateTopolgy(m_bAverage, m_pcScalars, m_sFolderAndFileName, m_pcColor);
 	CreateDataSet();
 	CreateLookupTable();
@@ -316,7 +316,7 @@ void CParameter::CreateDataSet()
 		cellTypes[i] = VTK_HEXAHEDRON;
 	m_pcUnstructuredGrid->SetCells(cellTypes, m_pcCellArray);
 	m_pcUnstructuredGrid->GetCellData()->SetScalars(m_pcScalars);
-	m_pcUnstructuredGrid->Update();
+	m_pcUnstructuredGrid->Modified();
 	delete [] cellTypes;
  }
 
@@ -379,7 +379,7 @@ void CParameter::ClipParameter()
 		if (m_pcGeometryFilter)
 			m_pcGeometryFilter->Delete();
 		m_pcGeometryFilter = vtkGeometryFilter::New();
-		m_pcGeometryFilter->SetInput(m_pcUnstructuredGrid);
+		m_pcGeometryFilter->SetInputData(m_pcUnstructuredGrid);
 		m_pcGeometryFilter->MergingOn();
 		m_pcGeometryFilter->Update();
 		DoClipPolyData(m_pcGeometryFilter->GetOutput());

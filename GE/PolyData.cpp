@@ -41,7 +41,7 @@ CPolyData::~CPolyData()
 /*--------------------------------------------------------------------------*/
 /* CreatePolyData                                                           */
 /*--------------------------------------------------------------------------*/
-void CPolyData::CreatePolyData(vtkFloatPoints* pcFloatPoints, vtkCellArray* pcCellArray,  vtkScalars* pcScalars /* = NULL */)
+void CPolyData::CreatePolyData(vtkPoints* pcFloatPoints, vtkCellArray* pcCellArray,  vtkDoubleArray* pcScalars /* = NULL */)
 {
 	if (m_pcPolyData) 
 		m_pcPolyData->Delete();
@@ -50,5 +50,5 @@ void CPolyData::CreatePolyData(vtkFloatPoints* pcFloatPoints, vtkCellArray* pcCe
 	m_pcPolyData->SetPolys(pcCellArray);
 	if (pcScalars)
 		m_pcPolyData->GetPointData()->SetScalars(pcScalars);
-	m_pcPolyData->Update();
+	m_pcPolyData->Modified();
 }

@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <SccProjectName />
+    <SccLocalPath />
+    <Keyword>MFCProj</Keyword>
+    <ProjectGuid>{3303C988-7759-4CF2-A607-03A1B4249E94}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\Debug\</OutDir>
+    <IntDir>.\Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <Optimization>MaxSpeed</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <AdditionalIncludeDirectories>"C:\Program Files (x86)\VTK\include\vtk-8.1;c:\Program Files\vtkNightly\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Release\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\Release\GE.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <ObjectFileName>.\Release\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Release\GE.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <RedirectOutputAndErrors>NUL</RedirectOutputAndErrors>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release\GE.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <OutputFile>.\Release\GE.exe</OutputFile>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\VTK\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vtkdll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <LinkStatus>true</LinkStatus>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <MinimalRebuild>true</MinimalRebuild>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\VTK\include\vtk-8.1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Debug\</AssemblerListingLocation>
+      <BrowseInformation>true</BrowseInformation>
+      <PrecompiledHeaderOutputFile>.\Debug\GE.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <ObjectFileName>.\Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Debug\GE.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <RedirectOutputAndErrors>NUL</RedirectOutputAndErrors>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
+      <OutputFile>.\Debug\GE.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <OutputFile>.\Debug\GE.exe</OutputFile>
+      <AdditionalLibraryDirectories>"C:\Program Files (x86)\VTK\lib"</AdditionalLibraryDirectories>
+      <ShowProgress>LinkVerbose</ShowProgress>
+      <LinkStatus>true</LinkStatus>
+      <AdditionalDependencies>vtkalglib-8.1.lib;vtkChartsCore-8.1.lib;vtkCommonColor-8.1.lib;vtkCommonComputationalGeometry-8.1.lib;vtkCommonCore-8.1.lib;vtkCommonDataModel-8.1.lib;vtkCommonExecutionModel-8.1.lib;vtkCommonMath-8.1.lib;vtkCommonMisc-8.1.lib;vtkCommonSystem-8.1.lib;vtkCommonTransforms-8.1.lib;vtkDICOMParser-8.1.lib;vtkDomainsChemistry-8.1.lib;vtkDomainsChemistryOpenGL2-8.1.lib;vtkexoIIc-8.1.lib;vtkexpat-8.1.lib;vtkFiltersAMR-8.1.lib;vtkFiltersCore-8.1.lib;vtkFiltersExtraction-8.1.lib;vtkFiltersFlowPaths-8.1.lib;vtkFiltersGeneral-8.1.lib;vtkFiltersGeneric-8.1.lib;vtkFiltersGeometry-8.1.lib;vtkFiltersHybrid-8.1.lib;vtkFiltersHyperTree-8.1.lib;vtkFiltersImaging-8.1.lib;vtkFiltersModeling-8.1.lib;vtkFiltersParallel-8.1.lib;vtkFiltersParallelImaging-8.1.lib;vtkFiltersPoints-8.1.lib;vtkFiltersProgrammable-8.1.lib;vtkFiltersSelection-8.1.lib;vtkFiltersSMP-8.1.lib;vtkFiltersSources-8.1.lib;vtkFiltersStatistics-8.1.lib;vtkFiltersTexture-8.1.lib;vtkFiltersTopology-8.1.lib;vtkFiltersVerdict-8.1.lib;vtkfreetype-8.1.lib;vtkGeovisCore-8.1.lib;vtkgl2ps-8.1.lib;vtkglew-8.1.lib;vtkhdf5-8.1.lib;vtkhdf5_hl-8.1.lib;vtkImagingColor-8.1.lib;vtkImagingCore-8.1.lib;vtkImagingFourier-8.1.lib;vtkImagingGeneral-8.1.lib;vtkImagingHybrid-8.1.lib;vtkImagingMath-8.1.lib;vtkImagingMorphological-8.1.lib;vtkImagingSources-8.1.lib;vtkImagingStatistics-8.1.lib;vtkImagingStencil-8.1.lib;vtkInfovisCore-8.1.lib;vtkInfovisLayout-8.1.lib;vtkInteractionImage-8.1.lib;vtkInteractionStyle-8.1.lib;vtkInteractionWidgets-8.1.lib;vtkIOAMR-8.1.lib;vtkIOCore-8.1.lib;vtkIOEnSight-8.1.lib;vtkIOExodus-8.1.lib;vtkIOExport-8.1.lib;vtkIOExportOpenGL2-8.1.lib;vtkIOGeometry-8.1.lib;vtkIOImage-8.1.lib;vtkIOImport-8.1.lib;vtkIOInfovis-8.1.lib;vtkIOLegacy-8.1.lib;vtkIOLSDyna-8.1.lib;vtkIOMINC-8.1.lib;vtkIOMovie-8.1.lib;vtkIONetCDF-8.1.lib;vtkIOParallel-8.1.lib;vtkIOParallelXML-8.1.lib;vtkIOPLY-8.1.lib;vtkIOSQL-8.1.lib;vtkIOTecplotTable-8.1.lib;vtkIOVideo-8.1.lib;vtkIOXML-8.1.lib;vtkIOXMLParser-8.1.lib;vtkjpeg-8.1.lib;vtkjsoncpp-8.1.lib;vtklibharu-8.1.lib;vtklibxml2-8.1.lib;vtkLocalExample-8.1.lib;vtklz4-8.1.lib;vtkmetaio-8.1.lib;vtkNetCDF-8.1.lib;vtknetcdfcpp-8.1.lib;vtkoggtheora-8.1.lib;vtkParallelCore-8.1.lib;vtkpng-8.1.lib;vtkproj4-8.1.lib;vtkRenderingAnnotation-8.1.lib;vtkRenderingContext2D-8.1.lib;vtkRenderingContextOpenGL2-8.1.lib;vtkRenderingCore-8.1.lib;vtkRenderingFreeType-8.1.lib;vtkRenderingGL2PSOpenGL2-8.1.lib;vtkRenderingImage-8.1.lib;vtkRenderingLabel-8.1.lib;vtkRenderingLOD-8.1.lib;vtkRenderingOpenGL2-8.1.lib;vtkRenderingVolume-8.1.lib;vtkRenderingVolumeOpenGL2-8.1.lib;vtksqlite-8.1.lib;vtksys-8.1.lib;vtkTestingGenericBridge-8.1.lib;vtkTestingIOSQL-8.1.lib;vtkTestingRendering-8.1.lib;vtktiff-8.1.lib;vtkverdict-8.1.lib;vtkViewsContext2D-8.1.lib;vtkViewsCore-8.1.lib;vtkViewsInfovis-8.1.lib;vtkzlib-8.1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Average.cpp" />
+    <ClCompile Include="AverageGUI.cpp" />
+    <ClCompile Include="AxesDlg.cpp" />
+    <ClCompile Include="CleanTriangulate.cpp" />
+    <ClCompile Include="ClipDlg.cpp" />
+    <ClCompile Include="ClipPolyData.cpp" />
+    <ClCompile Include="Color.cpp" />
+    <ClCompile Include="ColorEditBox.cpp" />
+    <ClCompile Include="ColorGrid.cpp" />
+    <ClCompile Include="ColorLevelDlg.cpp" />
+    <ClCompile Include="ColorPage.cpp" />
+    <ClCompile Include="ColorRow.cpp" />
+    <ClCompile Include="ColorSpectrum.cpp" />
+    <ClCompile Include="ColorSpectrumDlg.cpp" />
+    <ClCompile Include="ColorTable.cpp" />
+    <ClCompile Include="DecimateSmoothGUI.cpp" />
+    <ClCompile Include="DecimateSmoothNormals.cpp" />
+    <ClCompile Include="FilesExist.cpp" />
+    <ClCompile Include="font.cpp" />
+    <ClCompile Include="GE.cpp" />
+    <ClCompile Include="Geometry.cpp" />
+    <ClCompile Include="GeospatialModel.cpp" />
+    <ClCompile Include="GeospatialModelAverageGrid.cpp" />
+    <ClCompile Include="GeospatialModelAverageGridRelaxationFactorEditBox.cpp" />
+    <ClCompile Include="GeospatialModelAverageGridTargetReductionEditBox.cpp" />
+    <ClCompile Include="GeospatialModelAveragePage.cpp" />
+    <ClCompile Include="GeoSpatialModelForLayer.cpp" />
+    <ClCompile Include="GeospatialModelForLayerGUI.cpp" />
+    <ClCompile Include="GeospatialModelGeneralGrid.cpp" />
+    <ClCompile Include="GeospatialModelGeneralGridOpacityEditBox.cpp" />
+    <ClCompile Include="GeospatialModelGeneralPage.cpp" />
+    <ClCompile Include="GeospatialModelSheet.cpp" />
+    <ClCompile Include="GeospatialModelVisibleGrid.cpp" />
+    <ClCompile Include="GeospatialModelVisiblePage.cpp" />
+    <ClCompile Include="HexahedronTopology.cpp" />
+    <ClCompile Include="HydraulicComponent.cpp" />
+    <ClCompile Include="HydraulicComponentGUI.cpp" />
+    <ClCompile Include="HydraulicComponents.cpp" />
+    <ClCompile Include="HydraulicComponentsAveragePage.cpp" />
+    <ClCompile Include="HydraulicComponentsGeneralGrid.cpp" />
+    <ClCompile Include="HydraulicComponentsGeneralPage.cpp" />
+    <ClCompile Include="HydraulicComponentsGeneralPageTD.cpp" />
+    <ClCompile Include="HydraulicComponentsSheet.cpp" />
+    <ClCompile Include="HydraulicTDComponents.cpp" />
+    <ClCompile Include="HydraulicTIComponents.cpp" />
+    <ClCompile Include="Indexes.cpp" />
+    <ClCompile Include="IterationsEditBox.cpp" />
+    <ClCompile Include="LookUpTable.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="Mapper.cpp" />
+    <ClCompile Include="MenuButton.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ModelOutline.cpp" />
+    <ClCompile Include="ModelOutlineGeneralPage.cpp" />
+    <ClCompile Include="ModelOutlineSheet.cpp" />
+    <ClCompile Include="msflexgrid.cpp" />
+    <ClCompile Include="MT3DMS.cpp" />
+    <ClCompile Include="MT3DMSContourAndColorAddDlg.cpp" />
+    <ClCompile Include="MT3DMSContourAndColorEditBox.cpp" />
+    <ClCompile Include="MT3DMSContourAndColorGrid.cpp" />
+    <ClCompile Include="MT3DMSContourAndColorPage.cpp" />
+    <ClCompile Include="MT3DMSContourAndColorRow.cpp" />
+    <ClCompile Include="MT3DMSContourAndColorTable.cpp" />
+    <ClCompile Include="MT3DMSGeneralPage.cpp" />
+    <ClCompile Include="MT3DMSGUI.cpp" />
+    <ClCompile Include="MT3DMSLookupTable.cpp" />
+    <ClCompile Include="MT3DMSSheet.cpp" />
+    <ClCompile Include="MT3DMSTopology.cpp" />
+    <ClCompile Include="ObjectList.cpp" />
+    <ClCompile Include="Parameter.cpp" />
+    <ClCompile Include="ParameterAveragePage.cpp" />
+    <ClCompile Include="ParameterGeneralGrid.cpp" />
+    <ClCompile Include="ParameterGeneralPage.cpp" />
+    <ClCompile Include="ParameterGUI.cpp" />
+    <ClCompile Include="ParameterSheet.cpp" />
+    <ClCompile Include="picture.cpp" />
+    <ClCompile Include="PolyData.cpp" />
+    <ClCompile Include="PotentiometricSurface.cpp" />
+    <ClCompile Include="PotentiometricSurfaceAveragePage.cpp" />
+    <ClCompile Include="PotentiometricSurfaceGeneralPage.cpp" />
+    <ClCompile Include="PotentiometricSurfaceGUI.cpp" />
+    <ClCompile Include="PotentiometricSurfaceSheet.cpp" />
+    <ClCompile Include="QuadIndexes.cpp" />
+    <ClCompile Include="ReadFile.cpp" />
+    <ClCompile Include="RelaxationFactorEditBox.cpp" />
+    <ClCompile Include="rowcursor.cpp" />
+    <ClCompile Include="ScaleDlg.cpp" />
+    <ClCompile Include="SidesQuadTopology.cpp" />
+    <ClCompile Include="Splash.cpp" />
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="StressPeriod.cpp" />
+    <ClCompile Include="TimeAndLayerParameter.cpp" />
+    <ClCompile Include="TimeStep.cpp" />
+    <ClCompile Include="TopQuadTopology.cpp" />
+    <ClCompile Include="Visualization.cpp" />
+    <ClCompile Include="VisualizationObject.cpp" />
+    <ClCompile Include="VisualizeDlg.cpp" />
+    <ClCompile Include="VisualizeGrid.cpp" />
+    <ClCompile Include="vtkDoc.cpp" />
+    <ClCompile Include="vtkView.cpp" />
+    <ClCompile Include="XYZCoordinate.cpp" />
+    <ClCompile Include="XYZSurface.cpp" />
+    <ClCompile Include="XYZSurfaceDecSmoothPage.cpp" />
+    <ClCompile Include="XYZSurfaceGeneralPage.cpp" />
+    <ClCompile Include="XYZSurfaceGeometryAndTopology.cpp" />
+    <ClCompile Include="XYZSurfaceGUI.cpp" />
+    <ClCompile Include="XYZSurfaceSheet.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GE.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Actor.h" />
+    <ClInclude Include="Average.h" />
+    <ClInclude Include="AverageGUI.h" />
+    <ClInclude Include="AxesDlg.h" />
+    <ClInclude Include="CleanTriangulate.h" />
+    <ClInclude Include="ClipDlg.h" />
+    <ClInclude Include="ClipPolyData.h" />
+    <ClInclude Include="Color.h" />
+    <ClInclude Include="ColorEditBox.h" />
+    <ClInclude Include="ColorGrid.h" />
+    <ClInclude Include="ColorLevelDlg.h" />
+    <ClInclude Include="ColorPage.h" />
+    <ClInclude Include="ColorRow.h" />
+    <ClInclude Include="ColorSpectrum.h" />
+    <ClInclude Include="ColorSpectrumDlg.h" />
+    <ClInclude Include="ColorTable.h" />
+    <ClInclude Include="DecimateSmoothGUI.h" />
+    <ClInclude Include="DecimateSmoothNormals.h" />
+    <ClInclude Include="FilesExist.h" />
+    <ClInclude Include="font.h" />
+    <ClInclude Include="GE.h" />
+    <ClInclude Include="Geometry.h" />
+    <ClInclude Include="GeoSpatialModel.h" />
+    <ClInclude Include="GeospatialModelAverageGrid.h" />
+    <ClInclude Include="GeospatialModelAverageGridRelaxationFactorEditBox.h" />
+    <ClInclude Include="GeospatialModelAverageGridTargetReductionEditBox.h" />
+    <ClInclude Include="GeospatialModelAveragePage.h" />
+    <ClInclude Include="GeoSpatialModelForLayer.h" />
+    <ClInclude Include="GeospatialModelForLayerGUI.h" />
+    <ClInclude Include="GeospatialModelGeneralGrid.h" />
+    <ClInclude Include="GeospatialModelGeneralGridOpacityEditBox.h" />
+    <ClInclude Include="GeospatialModelGeneralPage.h" />
+    <ClInclude Include="GeospatialModelSheet.h" />
+    <ClInclude Include="GeospatialModelVisibleGrid.h" />
+    <ClInclude Include="GeospatialModelVisiblePage.h" />
+    <ClInclude Include="HexahedronTopology.h" />
+    <ClInclude Include="HydraulicComponent.h" />
+    <ClInclude Include="HydraulicComponentGUI.h" />
+    <ClInclude Include="HydraulicComponents.h" />
+    <ClInclude Include="HydraulicComponentsAveragePage.h" />
+    <ClInclude Include="HydraulicComponentsGeneralGrid.h" />
+    <ClInclude Include="HydraulicComponentsGeneralPage.h" />
+    <ClInclude Include="HydraulicComponentsGeneralPageTD.h" />
+    <ClInclude Include="HydraulicComponentsSheet.h" />
+    <ClInclude Include="HydraulicTDComponents.h" />
+    <ClInclude Include="HydraulicTIComponents.h" />
+    <ClInclude Include="Indexes.h" />
+    <ClInclude Include="IterationsEditBox.h" />
+    <ClInclude Include="LookUpTable.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="Mapper.h" />
+    <ClInclude Include="MenuButton.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="ModelOutline.h" />
+    <ClInclude Include="ModelOutlineGeneralPage.h" />
+    <ClInclude Include="ModelOutlineSheet.h" />
+    <ClInclude Include="msflexgrid.h" />
+    <ClInclude Include="MT3DMS.h" />
+    <ClInclude Include="MT3DMSContourAndColorAddDlg.h" />
+    <ClInclude Include="MT3DMSContourAndColorEditBox.h" />
+    <ClInclude Include="MT3DMSContourAndColorGrid.h" />
+    <ClInclude Include="MT3DMSContourAndColorPage.h" />
+    <ClInclude Include="MT3DMSContourAndColorRow.h" />
+    <ClInclude Include="MT3DMSContourAndColorTable.h" />
+    <ClInclude Include="MT3DMSGeneralPage.h" />
+    <ClInclude Include="MT3DMSGUI.h" />
+    <ClInclude Include="MT3DMSLookupTable.h" />
+    <ClInclude Include="MT3DMSSheet.h" />
+    <ClInclude Include="MT3DMSTopology.h" />
+    <ClInclude Include="ObjectList.h" />
+    <ClInclude Include="Parameter.h" />
+    <ClInclude Include="ParameterAveragePage.h" />
+    <ClInclude Include="ParameterGeneralGrid.h" />
+    <ClInclude Include="ParameterGeneralPage.h" />
+    <ClInclude Include="ParameterGUI.h" />
+    <ClInclude Include="ParameterSheet.h" />
+    <ClInclude Include="picture.h" />
+    <ClInclude Include="PolyData.h" />
+    <ClInclude Include="PotentiometricSurface.h" />
+    <ClInclude Include="PotentiometricSurfaceAveragePage.h" />
+    <ClInclude Include="PotentiometricSurfaceGeneralPage.h" />
+    <ClInclude Include="PotentiometricSurfaceGUI.h" />
+    <ClInclude Include="PotentiometricSurfaceSheet.h" />
+    <ClInclude Include="QuadIndexes.h" />
+    <ClInclude Include="ReadFile.h" />
+    <ClInclude Include="RelaxationFactorEditBox.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="rowcursor.h" />
+    <ClInclude Include="ScaleDlg.h" />
+    <ClInclude Include="SidesQuadTopology.h" />
+    <ClInclude Include="Splash.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="StressPeriod.h" />
+    <ClInclude Include="TimeAndLayerParameter.h" />
+    <ClInclude Include="TimeStep.h" />
+    <ClInclude Include="TopQuadTopology.h" />
+    <ClInclude Include="Visualization.h" />
+    <ClInclude Include="VisualizationObject.h" />
+    <ClInclude Include="VisualizeDlg.h" />
+    <ClInclude Include="VisualizeGrid.h" />
+    <ClInclude Include="vtkDoc.h" />
+    <ClInclude Include="vtkView.h" />
+    <ClInclude Include="XYZCoordinate.h" />
+    <ClInclude Include="XYZSurface.h" />
+    <ClInclude Include="XYZSurfaceDecSmoothPage.h" />
+    <ClInclude Include="XYZSurfaceGeneralPage.h" />
+    <ClInclude Include="XYZSurfaceGeometryAndTopology.h" />
+    <ClInclude Include="XYZSurfaceGUI.h" />
+    <ClInclude Include="XYZSurfaceSheet.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\bmp00001.bmp" />
+    <Image Include="res\bmp00002.bmp" />
+    <Image Include="res\bmp00003.bmp" />
+    <Image Include="res\bmpCHECK.bmp" />
+    <Image Include="res\CHECK.bmp" />
+    <Image Include="res\GE.ico" />
+    <Image Include="res\GE2000.ico" />
+    <Image Include="res\GEDoc.ico" />
+    <Image Include="res\ICON.ico" />
+    <Image Include="res\icon1.ico" />
+    <Image Include="res\icon_che.ico" />
+    <Image Include="res\idr_main.ico" />
+    <Image Include="res\mainfram.bmp" />
+    <Image Include="res\SELECT.bmp" />
+    <Image Include="res\Splash.bmp" />
+    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\toolbar1.bmp" />
+    <Image Include="res\UNCHECK.bmp" />
+    <Image Include="res\UNCHECK.ico" />
+    <Image Include="res\UNSELECT.bmp" />
+    <Image Include="Splsh16.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\GE.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="READFOR.lib" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

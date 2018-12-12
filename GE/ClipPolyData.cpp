@@ -62,7 +62,7 @@ void CClipPolyData::DoClipPolyData(vtkPolyData* pcPolyData)
 		if (m_pcClipPolyData) 
 			m_pcClipPolyData->Delete();
 		m_pcClipPolyData = vtkClipPolyData::New();
-		m_pcClipPolyData->SetInput(pcPolyData);
+		m_pcClipPolyData->SetInputData(pcPolyData);
 		m_pcClipPolyData->SetClipFunction(m_pcPlane);
 		m_pcClipPolyData->GenerateClippedOutputOn();
 		m_pcClipPolyData->Update();

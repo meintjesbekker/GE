@@ -101,6 +101,6 @@ void CHydraulicComponents::Clip()
 	for (int i = 0; i < m_pcHydraulicComponentArray.GetSize(); i++)
 		m_pcHydraulicComponentArray[i]->Clip();
 	RemoveActors();
-	for (i = 0; i < m_pcHydraulicComponentArray.GetSize(); i++)
+	for (int i = 0; i < m_pcHydraulicComponentArray.GetSize(); i++)
 		AddActor(m_pcHydraulicComponentArray[i]->GetLODActor());
 }

@@ -221,7 +221,7 @@ void CMT3DMS::ReadTotalElapsedTimesFromFile()
 	m_pdTotalElapsedTimes = new double[m_lNumberOfTimeIntervals];
 	
 	// assign array values
-	for (i = 0; i < m_lNumberOfTimeIntervals; i++)
+	for (int i = 0; i < m_lNumberOfTimeIntervals; i++)
 		m_pdTotalElapsedTimes[i] = pfTimeIntervals[i];
 	
 	// delete tempory array
@@ -249,7 +249,7 @@ void CMT3DMS::CalculatePointNormals()
 		m_pcPolyDataNormals = vtkPolyDataNormals::New();
 
 		// assign parameters
-		m_pcPolyDataNormals->SetInput(m_pcContourFilter->GetOutput());
+		m_pcPolyDataNormals->SetInputData(m_pcContourFilter->GetOutput());
 		m_pcPolyDataNormals->Update();
 	}
 }
@@ -268,9 +268,9 @@ void CMT3DMS::ClipMT3DMS()
 
 		// assign input
 		if (m_pcModel->GetNumberOfLayers() > 1)
-			m_pcGeometryFilter->SetInput(m_pcPolyDataNormals->GetOutput());
+			m_pcGeometryFilter->SetInputData(m_pcPolyDataNormals->GetOutput());
 		else
-			m_pcGeometryFilter->SetInput(m_pcContourFilter->GetOutput());
+			m_pcGeometryFilter->SetInputData(m_pcContourFilter->GetOutput());
 		m_pcGeometryFilter->MergingOn();
 		m_pcGeometryFilter->Update();
 		DoClipPolyData(m_pcGeometryFilter->GetOutput());
@@ -285,7 +285,7 @@ void CMT3DMS::CreateScalarDatasetAttribute()
 	// Create a scalar array.
 	if (m_pcScalars) 
 		m_pcScalars->Delete();
-	m_pcScalars = vtkFloatScalars::New();
+	m_pcScalars = vtkDoubleArray::New();
 
 	// BOOL to mark the first value which can be used for minimum and maximum
 	BOOL bFirst = TRUE;
@@ -340,10 +340,10 @@ void CMT3DMS::CreateScalarDatasetAttribute()
 				for (int k = 1; k <= m_iNumberOfPoints; k++)
 					if (m_pcModel->GetConcentrationInactive() == pfCon[i * m_pcModel->GetNumberOfColumns() + j])
 						// Insert next scalar with a value of 0.
-						m_pcScalars->InsertNextScalar(0);
+						m_pcScalars->InsertNextValue(0);
 					else
 						// Insert next scalar using the cell concentration.
-						m_pcScalars->InsertNextScalar(pfCon[i * m_pcModel->GetNumberOfColumns() + j]);
+						m_pcScalars->InsertNextValue(pfCon[i * m_pcModel->GetNumberOfColumns() + j]);
 			}
 		delete [] pfCon;
 	}
@@ -393,7 +393,7 @@ void CMT3DMS::ReadSpeciesFromFile()
 	m_piSpecies = new int[m_iNumberOfSpecies];
 
 	// assign all the species from temporary array
-	for (i = 0; i < m_iNumberOfSpecies; i++)
+	for (int i = 0; i < m_iNumberOfSpecies; i++)
 		m_piSpecies[i] = temporySpeciesArray[i];
 	
 	// clean the array
@@ -420,7 +420,7 @@ void CMT3DMS::GetConcentrationFileName(char cName[180])
 		cName[iIndex] = ' ';
 	
 	// assign string to char
-	for (iIndex = 0; iIndex < str.GetLength(); iIndex++)
+	for (int iIndex = 0; iIndex < str.GetLength(); iIndex++)
 		cName[iIndex] = str[iIndex];
 }
 
@@ -440,7 +440,7 @@ void CMT3DMS::CreateDataSet()
 										m_pcModel->GetNumberOfLayers());
 	m_pcStructuredGrid->SetPoints(m_pcFloatPoints);
 	m_pcStructuredGrid->GetPointData()->SetScalars(m_pcScalars);
-	m_pcStructuredGrid->Update();
+	m_pcStructuredGrid->Modified();
 }
 
 /*--------------------------------------------------------------------------*/

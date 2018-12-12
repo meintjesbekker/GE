@@ -92,7 +92,7 @@ void CHydraulicComponent::AppendTimeIndependentPolyData(HYDRAULICCOMPONENTTYPE c
 		vtkPolyData* pcPolyData = vtkPolyData::New();
 		pcPolyData->SetPoints(GetFloatPoints());
 		pcPolyData->SetPolys(pcCellArray);
-		m_pcAppendPolyData->AddInput(pcPolyData);
+		m_pcAppendPolyData->AddInputData(pcPolyData);
 		m_pcAppendPolyData->Update();
 		if (pcCellArray)
 			pcCellArray->Delete();
@@ -163,7 +163,7 @@ void CHydraulicComponent::AppendTimeDependentPolyData(HYDRAULICCOMPONENTTYPE cHy
 		vtkPolyData* pcPolyData = vtkPolyData::New();
 		pcPolyData->SetPoints(GetFloatPoints());
 		pcPolyData->SetPolys(pcCellArray);
-		m_pcAppendPolyData->AddInput(pcPolyData);
+		m_pcAppendPolyData->AddInputData(pcPolyData);
 		m_pcAppendPolyData->Update();
 		if (pcCellArray)
 			pcCellArray->Delete();
@@ -375,7 +375,7 @@ void CHydraulicComponent::ComputePointNormals()
 		if (m_pcPolyDataNormals) 
 			m_pcPolyDataNormals->Delete();
 		m_pcPolyDataNormals = vtkPolyDataNormals::New();
-		m_pcPolyDataNormals->SetInput(m_pcAppendPolyData->GetOutput());
+		m_pcPolyDataNormals->SetInputData(m_pcAppendPolyData->GetOutput());
 	}
 }
 
@@ -452,7 +452,7 @@ void CHydraulicComponent::CreateTimeDependentActiveCellsArray(CString sFileExten
 /*--------------------------------------------------------------------------*/
 void CHydraulicComponent::CreateActiveCellsArrayForFixedHeads(int iLayer)
 {
-	CreateActiveCellsArray("ibd", iLayer, TestIfActiveCellSmaller);
+	CreateActiveCellsArray("ibd", iLayer, &CHydraulicComponent::TestIfActiveCellSmaller);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -460,7 +460,7 @@ void CHydraulicComponent::CreateActiveCellsArrayForFixedHeads(int iLayer)
 /*--------------------------------------------------------------------------*/
 void CHydraulicComponent::CreateActiveCellsArrayForFixedConcentration(int iLayer)
 {
-	CreateActiveCellsArray("tic", iLayer, TestIfActiveCellSmaller);
+	CreateActiveCellsArray("tic", iLayer, &CHydraulicComponent::TestIfActiveCellSmaller);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -468,7 +468,7 @@ void CHydraulicComponent::CreateActiveCellsArrayForFixedConcentration(int iLayer
 /*--------------------------------------------------------------------------*/
 void CHydraulicComponent::CreateActiveCellsArrayForHorizontalFlowBarrier(int iLayer)
 {
-	CreateActiveCellsArray("wac", iLayer, TestIfActiveCellGreater);
+	CreateActiveCellsArray("wac", iLayer, &CHydraulicComponent::TestIfActiveCellGreater);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -476,7 +476,7 @@ void CHydraulicComponent::CreateActiveCellsArrayForHorizontalFlowBarrier(int iLa
 /*--------------------------------------------------------------------------*/
 void CHydraulicComponent::CreateActiveCellsArrayForReservoir(int iLayer)
 {
-	CreateActiveCellsArray("c85", iLayer, TestIfActiveCellGreater);
+	CreateActiveCellsArray("c85", iLayer, &CHydraulicComponent::TestIfActiveCellGreater);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -484,7 +484,7 @@ void CHydraulicComponent::CreateActiveCellsArrayForReservoir(int iLayer)
 /*--------------------------------------------------------------------------*/
 void CHydraulicComponent::CreateActiveCellsArrayForGeneralHeadBoundary(int iLayer, int iStressPeriod)
 {
-	CreateTimeDependentActiveCellsArray("ghc", iLayer, iStressPeriod, TestIfActiveCellGreater);
+	CreateTimeDependentActiveCellsArray("ghc", iLayer, iStressPeriod, &CHydraulicComponent::TestIfActiveCellGreater);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -492,7 +492,7 @@ void CHydraulicComponent::CreateActiveCellsArrayForGeneralHeadBoundary(int iLaye
 /*--------------------------------------------------------------------------*/
 void CHydraulicComponent::CreateActiveCellsArrayForDischargeWell(int iLayer, int iStressPeriod)
 {
-	CreateTimeDependentActiveCellsArray("wel", iLayer, iStressPeriod, TestIfActiveCellSmaller);
+	CreateTimeDependentActiveCellsArray("wel", iLayer, iStressPeriod, &CHydraulicComponent::TestIfActiveCellSmaller);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -500,7 +500,7 @@ void CHydraulicComponent::CreateActiveCellsArrayForDischargeWell(int iLayer, int
 /*--------------------------------------------------------------------------*/
 void CHydraulicComponent::CreateActiveCellsArrayForRechargeWell(int iLayer, int iStressPeriod)
 {
-	CreateTimeDependentActiveCellsArray("wel", iLayer, iStressPeriod, TestIfActiveCellGreater);
+	CreateTimeDependentActiveCellsArray("wel", iLayer, iStressPeriod, &CHydraulicComponent::TestIfActiveCellGreater);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -508,7 +508,7 @@ void CHydraulicComponent::CreateActiveCellsArrayForRechargeWell(int iLayer, int 
 /*--------------------------------------------------------------------------*/
 void CHydraulicComponent::CreateActiveCellsArrayForDrain(int iLayer, int iStressPeriod)
 {
-	CreateTimeDependentActiveCellsArray("drc", iLayer, iStressPeriod, TestIfActiveCellGreater);
+	CreateTimeDependentActiveCellsArray("drc", iLayer, iStressPeriod, &CHydraulicComponent::TestIfActiveCellGreater);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -516,7 +516,7 @@ void CHydraulicComponent::CreateActiveCellsArrayForDrain(int iLayer, int iStress
 /*--------------------------------------------------------------------------*/
 void CHydraulicComponent::CreateActiveCellsArrayForRiver(int iLayer, int iStressPeriod)
 {
-	CreateTimeDependentActiveCellsArray("ric", iLayer, iStressPeriod, TestIfActiveCellGreater);
+	CreateTimeDependentActiveCellsArray("ric", iLayer, iStressPeriod, &CHydraulicComponent::TestIfActiveCellGreater);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -524,7 +524,7 @@ void CHydraulicComponent::CreateActiveCellsArrayForRiver(int iLayer, int iStress
 /*--------------------------------------------------------------------------*/
 void CHydraulicComponent::CreateActiveCellsArrayForTimeVariantSpecifiedHead(int iLayer, int iStressPeriod)
 {
-	CreateTimeDependentActiveCellsArray("ch1", iLayer, iStressPeriod, TestIfActiveCellNotEqual);
+	CreateTimeDependentActiveCellsArray("ch1", iLayer, iStressPeriod, &CHydraulicComponent::TestIfActiveCellNotEqual);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -532,7 +532,7 @@ void CHydraulicComponent::CreateActiveCellsArrayForTimeVariantSpecifiedHead(int 
 /*--------------------------------------------------------------------------*/
 void CHydraulicComponent::CreateActiveCellsArrayForTimeVariantSpecifiedConcentration(int iLayer, int iStressPeriod)
 {
-	CreateTimeDependentActiveCellsArray("c55", iLayer, iStressPeriod, TestIfActiveCellGreater);
+	CreateTimeDependentActiveCellsArray("c55", iLayer, iStressPeriod, &CHydraulicComponent::TestIfActiveCellGreater);
 }
 
 /*--------------------------------------------------------------------------*/

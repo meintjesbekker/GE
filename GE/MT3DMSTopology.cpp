@@ -48,9 +48,10 @@ void CMT3DMSTopology::Contour(vtkStructuredGrid* pcStructuredGrid, CMT3DMSContou
 	m_pcContourFilter = vtkContourFilter::New();
 
 	// assign parameters
-	m_pcContourFilter->SetInput(pcStructuredGrid);
-	m_pcContourFilter->SetStartMethod(StartContouring, NULL);
-	m_pcContourFilter->SetEndMethod(EndContouring, NULL);
+	m_pcContourFilter->SetInputData(pcStructuredGrid);
+	// TODO: Fix the contouring.
+	// m_pcContourFilter->SetStartMethod(StartContouring, NULL);
+	// m_pcContourFilter->SetEndMethod(EndContouring, NULL);
 	for (int i = 0; i < pMT3DMSContourAndColorTable->GetSize(); i++)
 		m_pcContourFilter->SetValue(i, pMT3DMSContourAndColorTable->GetValue(i));
 	m_pcContourFilter->Update();
