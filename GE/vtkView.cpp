@@ -103,128 +103,20 @@ void CVtkView::OnDraw(CDC* pDC)
 { 
 	if (!m_Interactor->GetInitialized())
 	{
-		m_Interactor->SetRenderWindow(m_RenderWindow);
-		WNDPROC OldProc = (WNDPROC)GetWindowLong(m_hWnd, GWL_WNDPROC);
-		m_Interactor->Initialize();
-		SetWindowLong(m_hWnd, GWL_WNDPROC, (LONG)OldProc);
+		CRect rect;
+		this->GetClientRect(&rect);
+		this->m_Interactor->Initialize();
+		this->m_RenderWindow->SetSize(rect.right - rect.left, rect.bottom - rect.top);
+		this->m_Renderer->ResetCamera();
 	}
 
 	// do printing and print preview
 	if (pDC->IsPrinting())
 	{
-		int size[2];
-		BeginWaitCursor();
-		memcpy(size, m_RenderWindow->GetSize(), sizeof(int) * 2);
-		int cxDIB = size[0]; // Size of DIB - x
-		int cyDIB = size[1]; // Size of DIB - y
-
-		// get size of printer page (in pixels)
-		int cxPage = pDC->GetDeviceCaps(HORZRES);
-		int cyPage = pDC->GetDeviceCaps(VERTRES);
-		
-		// get printer pixels per inch
-		int cxInch = pDC->GetDeviceCaps(LOGPIXELSX);
-		int cyInch = pDC->GetDeviceCaps(LOGPIXELSY);
-		float scale = cxInch / m_iPrintDPI;
-
-		// Best Fit case -- create a rectangle which preserves
-		// the DIB's aspect ratio, and fills the page horizontally.
-		//
-		// The formula in the "->bottom" field below calculates the Y
-		// position of the printed bitmap, based on the size of the
-		// bitmap, the width of the page, and the relative size of
-		// a printed pixel (cyInch / cxInch).
-		CRect rcDest;
-		rcDest.bottom = 0;
-		rcDest.left = 0;
-		if ((fabs(cyDIB * cxPage) / fabs(cxInch)) > (fabs(cxDIB * cyPage / cyInch)))
-		{
-			rcDest.top = cyPage;
-			rcDest.right = fabs(cyPage * cxInch * cxDIB) /	fabs(cyInch * cyDIB);
-		}
-		else
-		{
-			rcDest.right = cxPage;
-			rcDest.top = fabs(cxPage * cyInch * cyDIB) / fabs(cxInch * cxDIB);
-		} 
-
-		// TODO: Fix this.
-		/*
-		CRect rcDestLP(rcDest);
-		pDC->DPtoLP(rcDestLP);
-		// m_RenderWindow->SetupMemoryRendering(rcDest.right / scale,
-		//	 									rcDest.top / scale,
-		//	 									pDC->m_hAttribDC);
-		
-		m_RenderWindow->SetUseOffScreenBuffers(true);
-		m_RenderWindow->Render();
-		*/
-
-		/*
-		pDC->SetStretchBltMode(HALFTONE);
-		StretchBlt(	pDC->GetSafeHdc(),
-					0,
-					0,
-					rcDest.right, 
-					rcDest.top, 
-					m_RenderWindow->GetMemoryDC(),
-					0, 
-					0, 
-					rcDest.right / scale,
-					rcDest.top / scale, 
-					SRCCOPY);
-		m_RenderWindow->ResumeScreenRendering();
-		*/
-		/*
-		unsigned char *pixels =
-			this->m_RenderWindow->GetPixelData(0, 0, size[0] - 1, size[1] - 1, 0);
-
-		// now copy he result to the HDC
-		int dataWidth = ((cxWindow * 3 + 3) / 4) * 4;
-
-		BITMAPINFO MemoryDataHeader;
-		MemoryDataHeader.bmiHeader.biSize = 40;
-		MemoryDataHeader.bmiHeader.biWidth = cxWindow;
-		MemoryDataHeader.bmiHeader.biHeight = cyWindow;
-		MemoryDataHeader.bmiHeader.biPlanes = 1;
-		MemoryDataHeader.bmiHeader.biBitCount = 24;
-		MemoryDataHeader.bmiHeader.biCompression = BI_RGB;
-		MemoryDataHeader.bmiHeader.biClrUsed = 0;
-		MemoryDataHeader.bmiHeader.biClrImportant = 0;
-		MemoryDataHeader.bmiHeader.biSizeImage = dataWidth * cyWindow;
-		MemoryDataHeader.bmiHeader.biXPelsPerMeter = 10000;
-		MemoryDataHeader.bmiHeader.biYPelsPerMeter = 10000;
-
-		unsigned char *MemoryData;    // the data in the DIBSection
-		HDC MemoryHdc = (HDC)CreateCompatibleDC(pDC->GetSafeHdc());
-		HBITMAP dib = CreateDIBSection(MemoryHdc,
-			&MemoryDataHeader, DIB_RGB_COLORS,
-			(void **)(&(MemoryData)), NULL, 0);
-
-		// copy the pixels over
-		for (int i = 0; i < cyWindow; i++)
-		{
-			for (int j = 0; j < cxWindow; j++)
-			{
-				MemoryData[i*dataWidth + j * 3] = pixels[i*cxWindow * 3 + j * 3 + 2];
-				MemoryData[i*dataWidth + j * 3 + 1] = pixels[i*cxWindow * 3 + j * 3 + 1];
-				MemoryData[i*dataWidth + j * 3 + 2] = pixels[i*cxWindow * 3 + j * 3];
-			}
-		}
-
-		// Put the bitmap into the device context
-		SelectObject(MemoryHdc, dib);
-		StretchBlt(pDC->GetSafeHdc(), 0, 0, x, y, MemoryHdc, 0, 0, cxWindow, cyWindow, SRCCOPY);
-
-		this->m_RenderWindow->SetUseOffScreenBuffers(false);
-		delete[] pixels;
-		*/
-
-		EndWaitCursor();
+		// TODO.
 	}
 	else
 	{
-		CWaitCursor waitCursor;
 		m_RenderWindow->Render();
 	}
 	CView::OnDraw(pDC);
@@ -247,15 +139,16 @@ void CVtkView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 	if (GetDocument()->m_pcModel == NULL || !GetDocument()->GetViewOpened())
 	{
 		m_Renderer->RemoveAllViewProps();
-		m_RenderWindow->RemoveRenderer(m_Renderer);
-		if (m_Renderer)
-			m_Renderer->Delete();
-		m_Renderer = vtkOpenGLRenderer::New();
-		m_Renderer->SetBackground(1, 1, 1);
-		m_Renderer->TwoSidedLightingOn();
-		m_Renderer->ResetCamera();
-		m_RenderWindow->AddRenderer(m_Renderer);
+		//m_RenderWindow->RemoveRenderer(m_Renderer);
+		//if (m_Renderer)
+		//	m_Renderer->Delete();
+		//m_Renderer = vtkOpenGLRenderer::New();
+		//m_Renderer->SetBackground(1, 0, 1);
+		//m_Renderer->TwoSidedLightingOn();
+		//m_Renderer->ResetCamera();
+		//m_RenderWindow->AddRenderer(m_Renderer);
 	}
+
 	if (GetDocument()->m_pcModel)
 	{
 		m_Renderer->RemoveAllViewProps();
@@ -268,7 +161,7 @@ void CVtkView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				vtkActor* anActor;
 				for (GetDocument()->m_pcVisualization->m_pcVisualizationObjectArray.GetAt(i)->GetActorCollection()->InitTraversal();
 					(anActor = GetDocument()->m_pcVisualization->m_pcVisualizationObjectArray.GetAt(i)->GetActorCollection()->GetNextActor());)
-						m_Renderer->AddActor(anActor);
+						m_Renderer->AddViewProp(anActor);
 			}
 		}
 	}
@@ -284,25 +177,30 @@ void CVtkView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		viewangle = m_Renderer->GetActiveCamera()->GetViewAngle();
 		m_Scaled = FALSE;
 	}
-	m_Renderer->GetActiveCamera()->SetFocalPoint(focalpoint);
-	m_Renderer->GetActiveCamera()->SetPosition(position);
-	m_Renderer->GetActiveCamera()->SetViewUp(viewup);
-	m_Renderer->GetActiveCamera()->SetViewAngle(viewangle);
-	m_Renderer->ResetCameraClippingRange();
+
+	// m_Renderer->GetActiveCamera()->SetFocalPoint(focalpoint);
+	// m_Renderer->GetActiveCamera()->SetPosition(position);
+	// m_Renderer->GetActiveCamera()->SetViewUp(viewup);
+	// m_Renderer->GetActiveCamera()->SetViewAngle(viewangle);
+	// m_Renderer->ResetCameraClippingRange();
 
 	// create the axes
 	if (GetDocument()->m_pcModel)
 	{
 		// label axes
-		if (	GetDocument()->m_pcModel->GetXVisible()
-			||	GetDocument()->m_pcModel->GetYVisible()
-			||	GetDocument()->m_pcModel->GetZVisible())
+		if (   GetDocument()->m_pcModel->GetXVisible()
+			|| GetDocument()->m_pcModel->GetYVisible()
+			|| GetDocument()->m_pcModel->GetZVisible())
 			CreateLabeledAxes();
 
 		// color axes
 		if (GetDocument()->m_pcModel->GetColorAxesVisibility())
 			CreateColoredAxes();
 	}
+
+	// TODO: Remove it is for debugging only.
+	vtkActorCollection* debugactor = this->m_Renderer->GetActors();
+	
 	CView::OnUpdate(pSender, lHint, pHint);
 }
 
@@ -316,28 +214,18 @@ LRESULT CVtkView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	//	case	WM_PAINT: 
 		case	WM_LBUTTONDOWN: 
 		case	WM_LBUTTONUP:
-				{
-					m_Renderer->GetActiveCamera()->GetFocalPoint(focalpoint);
-					m_Renderer->GetActiveCamera()->GetPosition(position);
-					m_Renderer->GetActiveCamera()->GetViewUp(viewup);
-					viewangle = m_Renderer->GetActiveCamera()->GetViewAngle();
-				}
 		case	WM_MBUTTONDOWN: 
 		case	WM_MBUTTONUP:
 		case	WM_RBUTTONDOWN: 
 		case	WM_RBUTTONUP:
-				{
-					m_Renderer->GetActiveCamera()->GetFocalPoint(focalpoint);
-					m_Renderer->GetActiveCamera()->GetPosition(position);
-					m_Renderer->GetActiveCamera()->GetViewUp(viewup);
-					viewangle = m_Renderer->GetActiveCamera()->GetViewAngle();
-				}
 		case	WM_MOUSEMOVE:
 		case	WM_CHAR:
 		case	WM_TIMER:
 				{	
 					if (m_Interactor->GetInitialized())
-						return vtkHandleMessage(m_hWnd, message, wParam, lParam);
+					{
+						return vtkHandleMessage2(this->m_hWnd, message, wParam, lParam, this->m_Interactor);
+					}
 				}
 		break;
 	}
@@ -373,9 +261,13 @@ int CVtkView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	m_RenderWindow->SetParentId(lpCreateStruct->hwndParent);
-	m_RenderWindow->SetWindowId(m_hWnd);
-	m_RenderWindow->WindowInitialize();
+
+	this->m_RenderWindow->AddRenderer(this->m_Renderer);
+	
+	// setup the parent window
+	this->m_RenderWindow->SetParentId(this->m_hWnd);
+	this->m_Interactor->SetRenderWindow(this->m_RenderWindow);
+
 	return 0;
 }
 
@@ -469,11 +361,17 @@ void CVtkView::OnOptionsAxes()
 void CVtkView::OnSize(UINT nType, int cx, int cy) 
 {
 	CView::OnSize(nType, cx, cy);
-	if (m_Interactor->GetInitialized())
-	{
-		m_Interactor->SetSize(cx, cy);
-		m_Interactor->UpdateSize(cx, cy);
-	}
+	CRect rect;
+	this->GetClientRect(&rect);
+	this->m_RenderWindow->SetSize(rect.right - rect.left, rect.bottom - rect.top);
+}
+
+/*--------------------------------------------------------------------------*/
+/* OnEraseBkgnd                                                             */
+/*--------------------------------------------------------------------------*/
+BOOL CVtkView::OnEraseBkgnd(CDC* pDC)
+{
+	return TRUE;
 }
 
 /*--------------------------------------------------------------------------*/
@@ -486,7 +384,7 @@ void CVtkView::CreateLabeledAxes()
 		m_OutlineSource->Delete();
 		m_OutlineSource = NULL;
 	}
-	m_OutlineSource =  vtkOutlineSource::New();
+	m_OutlineSource = vtkOutlineSource::New();
 	m_OutlineSource->SetBounds(	GetDocument()->m_pcModel->GetMinimumXBound(),
 								GetDocument()->m_pcModel->GetMaximumXBound(), 
 								GetDocument()->m_pcModel->GetMinimumYBound(), 
@@ -502,7 +400,8 @@ void CVtkView::CreateLabeledAxes()
 	m_OutlinePolyDataMapper->SetInputData(m_OutlineSource->GetOutput());
 	m_OutlineActor = vtkActor::New();
 	m_OutlineActor->SetMapper(m_OutlinePolyDataMapper);
-	m_OutlineActor->GetProperty()->SetColor(0, 0, 0);
+	// TODO: Set the color back.
+	m_OutlineActor->GetProperty()->SetColor(0, 1, 0);
 	m_OutlineActor->SetScale(	GetDocument()->m_pcModel->GetXScale(), 
 								GetDocument()->m_pcModel->GetYScale(),
 								GetDocument()->m_pcModel->GetZScale());
@@ -513,8 +412,7 @@ void CVtkView::CreateLabeledAxes()
 		m_CubeAxesActor2D = NULL;
 	}
 	m_CubeAxesActor2D = vtkCubeAxesActor2D::New();
-	// TODO: Fix the following line.
-	// m_CubeAxesActor2D->SetProp(m_OutlineActor);
+	m_CubeAxesActor2D->SetViewProp(m_OutlineActor);
 	m_CubeAxesActor2D->SetCamera(m_Renderer->GetActiveCamera());
 	// TODO: m_CubeAxesActor2D->ShadowOn();
 	m_CubeAxesActor2D->SetFlyModeToClosestTriad();
@@ -529,6 +427,7 @@ void CVtkView::CreateLabeledAxes()
 	float green = GetGValue(GetDocument()->m_pcModel->GetColor()) / 255.0;
 	float blue = GetBValue(GetDocument()->m_pcModel->GetColor()) / 255.0;
 	m_CubeAxesActor2D->GetProperty()->SetColor(red, green, blue);
+	// TODO: Undo not adding the outline.
 	m_Renderer->AddViewProp(m_CubeAxesActor2D);
 }
 
@@ -543,10 +442,14 @@ void CVtkView::CreateColoredAxes()
 		m_pAxes = NULL;
 	}
 	m_pAxes = vtkAxes::New();
-    m_pAxes->SetOrigin(	GetDocument()->m_pcModel->GetMinimumXBound() * GetDocument()->m_pcModel->GetXScale(), 
-						GetDocument()->m_pcModel->GetMinimumYBound() * GetDocument()->m_pcModel->GetYScale(), 
-						GetDocument()->m_pcModel->GetMinimumZBound() * GetDocument()->m_pcModel->GetZScale());
-    m_pAxes->SetScaleFactor(fabs(GetDocument()->m_pcModel->GetMaximumXBound() - GetDocument()->m_pcModel->GetMinimumXBound()) / 7.0);
+	m_pAxes->SetOrigin(GetDocument()->m_pcModel->GetMinimumXBound(),
+    					GetDocument()->m_pcModel->GetMinimumYBound(),
+	    				GetDocument()->m_pcModel->GetMinimumZBound());
+
+    //m_pAxes->SetOrigin(	GetDocument()->m_pcModel->GetMinimumXBound() * GetDocument()->m_pcModel->GetXScale(), 
+	//					GetDocument()->m_pcModel->GetMinimumYBound() * GetDocument()->m_pcModel->GetYScale(), 
+	//					GetDocument()->m_pcModel->GetMinimumZBound() * GetDocument()->m_pcModel->GetZScale());
+    //m_pAxes->SetScaleFactor(fabs(GetDocument()->m_pcModel->GetMaximumXBound() - GetDocument()->m_pcModel->GetMinimumXBound()) / 7.0);
 	if (m_pTubeFilter)
 	{
 		m_pTubeFilter->Delete();
@@ -554,8 +457,10 @@ void CVtkView::CreateColoredAxes()
 	}
 	m_pTubeFilter = vtkTubeFilter::New();
     m_pTubeFilter->SetInputData(m_pAxes->GetOutput());
-    m_pTubeFilter->SetRadius(m_pAxes->GetScaleFactor()/25.0);
-    m_pTubeFilter->SetNumberOfSides(6);
+	m_pTubeFilter->SetRadius(m_pAxes->GetScaleFactor());
+    //m_pTubeFilter->SetRadius(m_pAxes->GetScaleFactor()/25.0);
+    //m_pTubeFilter->SetNumberOfSides(6);
+	
 	if (m_pPolyDataMapper)
 	{
 		m_pPolyDataMapper->Delete();
@@ -563,6 +468,7 @@ void CVtkView::CreateColoredAxes()
 	}
 	m_pPolyDataMapper = vtkPolyDataMapper::New();
 	m_pPolyDataMapper->SetInputData(m_pTubeFilter->GetOutput());
+	
 	if (m_pAxesActor)
 	{
 		m_pAxesActor->Delete();
@@ -570,8 +476,15 @@ void CVtkView::CreateColoredAxes()
 	}
 	m_pAxesActor = vtkActor::New();
 	m_pAxesActor->SetMapper(m_pPolyDataMapper);
-	m_pAxesActor->SetScale(1, 1, 1);
+	// TODO: Set the scale back to what it is supposed to be.
+	// m_pAxesActor->SetScale(1, 1, 1);
+	// TODO: Set Modified on the actor. Works for outline!
+	// m_pAxesActor->Modified();
 	m_Renderer->AddViewProp(m_pAxesActor);
+	// TODO: Is this Modified necassary, and the Render?
+	//m_Renderer->DebugOn();
+	//m_Renderer->Modified();
+	//m_RenderWindow->Render();
 }
 
 /*--------------------------------------------------------------------------*/
@@ -583,22 +496,25 @@ void CVtkView::InitializeVTK()
 	if (m_Renderer)
 		m_Renderer->Delete();
 	m_Renderer = vtkOpenGLRenderer::New();
-	m_Renderer->SetBackground(1, 1, 1);
-	m_Renderer->TwoSidedLightingOn();
-	m_Renderer->ResetCamera();
+	m_Renderer->SetBackground(1, 0, 1);
+	// TODO: Set back to white.
+	// m_Renderer->SetBackground(1, 0, 0);
+	// m_Renderer->TwoSidedLightingOn();
+	// m_Renderer->ResetCamera();
 
 	// renderwindow
 	if (m_RenderWindow)
 		m_RenderWindow->Delete();
+	// TODO: Try vtkMFCWindow.
 	m_RenderWindow = vtkWin32OpenGLRenderWindow::New();
-	m_RenderWindow->AddRenderer(m_Renderer);
-	m_RenderWindow->SwapBuffersOn();
+	// m_RenderWindow->AddRenderer(m_Renderer);
+	// m_RenderWindow->SwapBuffersOn();
 
 	// interactor
 	if (m_Interactor)
 		m_Interactor->Delete();
 	m_Interactor = vtkWin32RenderWindowInteractor::New();
-	m_Interactor->LightFollowCameraOn();
+	// m_Interactor->LightFollowCameraOn();
 }
 
 /*--------------------------------------------------------------------------*/

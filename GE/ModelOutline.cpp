@@ -146,7 +146,8 @@ void CModelOutline::CreateOutlineSource()
 /*--------------------------------------------------------------------------*/
 void CModelOutline::CreateActor()
 {
-	COLORREF cColor = RGB(0, 0, 0);
+	// TODO: Set color to green. Only thing that is visualized at the moment.
+	COLORREF cColor = RGB(0, 255, 0);
 	CActor::CreateActor(m_pcPolyDataMapper, TRUE, 1.0, cColor);
 	RemoveActors();
 	AddActor(m_pcActor);

@@ -20,6 +20,12 @@
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Developer Studio will insert additional declarations immediately before the previous line.
+#include <vtkAutoInit.h>
+VTK_MODULE_INIT(vtkRenderingOpenGL2);
+VTK_MODULE_INIT(vtkInteractionStyle);
+//VTK_MODULE_INIT(vtkRenderingFreeTypeOpenGL);
+VTK_MODULE_INIT(vtkRenderingFreeType);
+
 #include "vtkActor.h"
 #include "vtkActorCollection.h"
 #include "vtkAppendPolyData.h"
@@ -38,6 +44,7 @@
 #include "vtkGeometryFilter.h"
 #include "vtkLODActor.h"
 #include "vtkLookupTable.h"
+#include "vtkMFCWindow.h"
 #include "vtkOpenGLRenderer.h"
 #include "vtkOutlineFilter.h"
 #include "vtkOutlineSource.h"

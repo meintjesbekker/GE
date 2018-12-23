@@ -26,6 +26,7 @@ static char THIS_FILE[] = __FILE__;
 /*--------------------------------------------------------------------------*/
 CGEApp::CGEApp()
 {
+	pDocTemplate = NULL;
 }
 
 /*--------------------------------------------------------------------------*/
@@ -81,7 +82,9 @@ BOOL CGEApp::InitInstance()
 											RUNTIME_CLASS(CVtkDoc),
 											RUNTIME_CLASS(CMainFrame), // main SDI frame window
 											RUNTIME_CLASS(CVtkView));
-	
+	if (!pDocTemplate)
+		return FALSE;
+
 	// add a document template to the list of available document templates which the application maintains
 	AddDocTemplate(pDocTemplate);
 
@@ -97,7 +100,7 @@ BOOL CGEApp::InitInstance()
 		return FALSE;
 
 	// The one and only window has been initialized, so show and update it
-	// m_pMainWnd->ShowWindow(SW_SHOWMAXIMIZED);
+	m_pMainWnd->ShowWindow(SW_SHOWMAXIMIZED);
     if (!((CMainFrame*) m_pMainWnd)->RestoreWindowState())
         m_pMainWnd->ShowWindow(m_nCmdShow);
 	m_pMainWnd->UpdateWindow();
