@@ -382,7 +382,7 @@ void CParameter::ClipParameter()
 		m_pcGeometryFilter->SetInputData(m_pcUnstructuredGrid);
 		m_pcGeometryFilter->MergingOn();
 		m_pcGeometryFilter->Update();
-		DoClipPolyData(m_pcGeometryFilter->GetOutput());
+		DoClipPolyData(m_pcGeometryFilter->GetOutputPort());
 	}
 }
 

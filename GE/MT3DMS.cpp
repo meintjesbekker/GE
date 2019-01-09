@@ -273,7 +273,7 @@ void CMT3DMS::ClipMT3DMS()
 			m_pcGeometryFilter->SetInputData(m_pcContourFilter->GetOutput());
 		m_pcGeometryFilter->MergingOn();
 		m_pcGeometryFilter->Update();
-		DoClipPolyData(m_pcGeometryFilter->GetOutput());
+		DoClipPolyData(m_pcGeometryFilter->GetOutputPort());
 	}
 }
 
@@ -491,18 +491,18 @@ void CMT3DMS::CreateMapper()
 {
 	CreateLookupTable();
 	if (m_pcModel->GetClip())
-		CMapper::CreateMapper(	m_pcClipPolyData->GetOutput(),
+		CMapper::CreateMapper(	m_pcClipPolyData->GetOutputPort(),
 								m_pcLookupTable,
 								m_pMT3DMSContourAndColorTable->GetMaximumScalarValue(),
 								m_pMT3DMSContourAndColorTable->GetMaximumScalarValue());
 	else
 		if (m_pcModel->GetNumberOfLayers() > 1)
-			CMapper::CreateMapper(	m_pcPolyDataNormals->GetOutput(),
+			CMapper::CreateMapper(	m_pcPolyDataNormals->GetOutputPort(),
 									m_pcLookupTable,
 									m_pMT3DMSContourAndColorTable->GetMaximumScalarValue(),
 									m_pMT3DMSContourAndColorTable->GetMaximumScalarValue());
 		else
-			CMapper::CreateMapper(	m_pcContourFilter->GetOutput(),
+			CMapper::CreateMapper(	m_pcContourFilter->GetOutputPort(),
 									m_pcLookupTable,
 									m_pMT3DMSContourAndColorTable->GetMaximumScalarValue(),
 									m_pMT3DMSContourAndColorTable->GetMaximumScalarValue());

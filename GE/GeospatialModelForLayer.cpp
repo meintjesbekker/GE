@@ -58,16 +58,16 @@ void CGeospatialModelForLayer::Update()
 	CreatePolyData(m_pcFloatPoints, m_pcCellArray);
 	CleanPolygonalData(m_pcPolyData);
 	Triangulate(m_bAverage);
-	Decimate(	(m_pcTriangleFilter) ? m_pcTriangleFilter->GetOutput() : NULL, 
+	Decimate(	(m_pcTriangleFilter) ? m_pcTriangleFilter->GetOutputPort() : NULL, 
 				m_bDecimate, 
 				m_fTargetReduction);
-	SmoothPolyData(	(m_pcTriangleFilter) ? m_pcTriangleFilter->GetOutput() : NULL, 
+	SmoothPolyData(	(m_pcTriangleFilter) ? m_pcTriangleFilter->GetOutputPort() : NULL, 
 					m_bSmooth, 
 					m_bDecimate, 
 					m_iNumberOfIterations, 
 					m_fRelaxationFactor);
-	ComputePolyDataNormals(	(m_pcTriangleFilter) ? m_pcTriangleFilter->GetOutput() : NULL, 
-							m_pcCleanPolyData->GetOutput(), 
+	ComputePolyDataNormals(	(m_pcTriangleFilter) ? m_pcTriangleFilter->GetOutputPort() : NULL, 
+							m_pcCleanPolyData->GetOutputPort(), 
 							m_bSmooth, 
 							m_bDecimate, 
 							m_bAverage);
@@ -79,7 +79,7 @@ void CGeospatialModelForLayer::Update()
 /*--------------------------------------------------------------------------*/
 void CGeospatialModelForLayer::Clip()
 {
-	DoClipPolyData(m_pcPolyDataNormals->GetOutput());
+	DoClipPolyData(m_pcPolyDataNormals->GetOutputPort());
 	CreateMapper();
 	CreateLODActor(m_pcPolyDataMapper, m_bVisible, m_fOpacity, m_cColor);
 }
@@ -90,9 +90,9 @@ void CGeospatialModelForLayer::Clip()
 void CGeospatialModelForLayer::CreateMapper()
 {
 	if (m_pcModel->GetClip())
-		CMapper::CreateMapper(m_pcClipPolyData->GetOutput());
+		CMapper::CreateMapper(m_pcClipPolyData->GetOutputPort());
 	else
-		CMapper::CreateMapper(m_pcPolyDataNormals->GetOutput());
+		CMapper::CreateMapper(m_pcPolyDataNormals->GetOutputPort());
 }
 
 /*--------------------------------------------------------------------------*/

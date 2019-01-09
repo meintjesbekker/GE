@@ -75,7 +75,7 @@ void CModelOutline::SetMaximumCornerCoordinate(float fX, float fY, float fZ)
 void CModelOutline::Create()
 {
 	CreateOutlineSource();
-	CreateMapper(m_pcOutlineSource->GetOutput());
+	CreateMapper(m_pcOutlineSource->GetOutputPort());
 	CreateActor();
 }
 
@@ -146,8 +146,7 @@ void CModelOutline::CreateOutlineSource()
 /*--------------------------------------------------------------------------*/
 void CModelOutline::CreateActor()
 {
-	// TODO: Set color to green. Only thing that is visualized at the moment.
-	COLORREF cColor = RGB(0, 255, 0);
+	COLORREF cColor = RGB(0, 0, 0);
 	CActor::CreateActor(m_pcPolyDataMapper, TRUE, 1.0, cColor);
 	RemoveActors();
 	AddActor(m_pcActor);

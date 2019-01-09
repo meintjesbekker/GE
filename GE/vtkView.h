@@ -47,7 +47,6 @@ protected:
 	afx_msg void OnInteractClip();
 	afx_msg void OnOptionsAxes();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnEditCopy();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
@@ -83,7 +82,6 @@ private:
 	// graphics black box
 	vtkWin32RenderWindowInteractor*	m_Interactor;
 	vtkOpenGLRenderer* m_Renderer;
-	// TODO: Change this to vtkMFCWindow.
 	vtkWin32OpenGLRenderWindow* m_RenderWindow;
 	
 	// handle to window and DC

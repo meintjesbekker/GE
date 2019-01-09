@@ -63,7 +63,7 @@ void CCleanTriangulate::Triangulate(BOOL bAverage)
 		if (m_pcTriangleFilter) 
 			m_pcTriangleFilter->Delete();
 		m_pcTriangleFilter = vtkTriangleFilter::New();
-		m_pcTriangleFilter->SetInputData(m_pcCleanPolyData->GetOutput());
+		m_pcTriangleFilter->SetInputConnection(m_pcCleanPolyData->GetOutputPort());
 		m_pcTriangleFilter->Update();
 	}
 }

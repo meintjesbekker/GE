@@ -48,7 +48,7 @@ CDecimateSmoothNormals::~CDecimateSmoothNormals()
 /*--------------------------------------------------------------------------*/
 /* Decimate                                                                 */
 /*--------------------------------------------------------------------------*/
-void CDecimateSmoothNormals::Decimate(vtkPolyData* pcPolyData, BOOL bDecimate, float fTargetReduction)
+void CDecimateSmoothNormals::Decimate(vtkAlgorithmOutput* pcPolyData, BOOL bDecimate, float fTargetReduction)
 {
 	if (bDecimate)
 	{
@@ -56,7 +56,7 @@ void CDecimateSmoothNormals::Decimate(vtkPolyData* pcPolyData, BOOL bDecimate, f
 			m_pcDecimatePro->Delete();
 		m_pcDecimatePro = vtkDecimatePro::New();
 		m_pcDecimatePro->GlobalWarningDisplayOff();
-		m_pcDecimatePro->SetInputData(pcPolyData);
+		m_pcDecimatePro->SetInputConnection(pcPolyData); 
 		m_pcDecimatePro->SetTargetReduction(fTargetReduction);
 		m_pcDecimatePro->Update();
 	}
@@ -65,7 +65,7 @@ void CDecimateSmoothNormals::Decimate(vtkPolyData* pcPolyData, BOOL bDecimate, f
 /*--------------------------------------------------------------------------*/
 /* Smooth                                                                   */
  /*--------------------------------------------------------------------------*/
-void CDecimateSmoothNormals::SmoothPolyData(vtkPolyData* pcPolyData, BOOL bSmooth, BOOL bDecimate, int iNumberOfIterations, float fRelaxationFactor)
+void CDecimateSmoothNormals::SmoothPolyData(vtkAlgorithmOutput* pcPolyData, BOOL bSmooth, BOOL bDecimate, int iNumberOfIterations, float fRelaxationFactor)
 {
 	if (bSmooth)
 	{
@@ -73,9 +73,9 @@ void CDecimateSmoothNormals::SmoothPolyData(vtkPolyData* pcPolyData, BOOL bSmoot
 			m_pcSmoothPolyDataFilter->Delete();
 		m_pcSmoothPolyDataFilter = vtkSmoothPolyDataFilter::New();
 		if (bDecimate)
-			m_pcSmoothPolyDataFilter->SetInputData(m_pcDecimatePro->GetOutput());
+			m_pcSmoothPolyDataFilter->SetInputConnection(m_pcDecimatePro->GetOutputPort());
 		else
-			m_pcSmoothPolyDataFilter->SetInputData(pcPolyData);
+			m_pcSmoothPolyDataFilter->SetInputConnection(pcPolyData);
 		m_pcSmoothPolyDataFilter->SetNumberOfIterations(iNumberOfIterations);
 		m_pcSmoothPolyDataFilter->SetRelaxationFactor(fRelaxationFactor);
 		m_pcSmoothPolyDataFilter->Update();
@@ -85,20 +85,20 @@ void CDecimateSmoothNormals::SmoothPolyData(vtkPolyData* pcPolyData, BOOL bSmoot
 /*--------------------------------------------------------------------------*/
 /* ComputePointNormals                                                      */
 /*--------------------------------------------------------------------------*/
-void CDecimateSmoothNormals::ComputePolyDataNormals(vtkPolyData* pcPolyData, vtkPolyData* pcCleanPolyData, BOOL bSmooth, BOOL bDecimate, BOOL bAverage)
+void CDecimateSmoothNormals::ComputePolyDataNormals(vtkAlgorithmOutput* pcPolyData, vtkAlgorithmOutput* pcCleanPolyData, BOOL bSmooth, BOOL bDecimate, BOOL bAverage)
 {
 	if (m_pcPolyDataNormals) 
 		m_pcPolyDataNormals->Delete();
 	m_pcPolyDataNormals = vtkPolyDataNormals::New();
 	m_pcPolyDataNormals->GlobalWarningDisplayOff();
 	if (bSmooth)
-		m_pcPolyDataNormals->SetInputData(m_pcSmoothPolyDataFilter->GetOutput());
+		m_pcPolyDataNormals->SetInputConnection(m_pcSmoothPolyDataFilter->GetOutputPort());
 	else 
 		if (bDecimate)
-			m_pcPolyDataNormals->SetInputData(m_pcDecimatePro->GetOutput());
+			m_pcPolyDataNormals->SetInputConnection(m_pcDecimatePro->GetOutputPort());
 		else 
 			if (bAverage)
-				m_pcPolyDataNormals->SetInputData(pcPolyData);
+				m_pcPolyDataNormals->SetInputConnection(pcPolyData);
 			else
-				m_pcPolyDataNormals->SetInputData(pcCleanPolyData);
+				m_pcPolyDataNormals->SetInputConnection(pcCleanPolyData);
 }

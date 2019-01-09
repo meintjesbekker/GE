@@ -123,7 +123,7 @@ BOOL CMT3DMSContourAndColorPage::OnInitDialog()
 	m_cSlider.SetPos((int)(m_fOpacity * 1000.0f));
 	m_cSlider.SetTicFreq(100);
 	m_cSlider.SetPageSize(100);
-	sprintf(cBuff, "%.2f", m_fOpacity);
+	sprintf_s(cBuff, "%.2f", m_fOpacity);
 	SetDlgItemText(IDC_EDIT_OPACITY, cBuff);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -137,7 +137,7 @@ void CMT3DMSContourAndColorPage::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* 
 	float fOpacity;
 	char cBuff[16];
 	fOpacity = (float)(((CSliderCtrl *)pScrollBar)->GetPos()) / 1000.0f;
-	sprintf(cBuff, "%.2f", fOpacity);
+	sprintf_s(cBuff, "%.2f", fOpacity);
 	if(nSBCode == SB_ENDSCROLL)
 		return;
 

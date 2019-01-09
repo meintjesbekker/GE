@@ -43,7 +43,7 @@ CMapper::~CMapper()
 /*--------------------------------------------------------------------------*/
 /* CreateMapper            													*/
 /*--------------------------------------------------------------------------*/
-void CMapper::CreateMapper(vtkPolyData* pcPolyData, 
+void CMapper::CreateMapper(vtkAlgorithmOutput* pcPolyData, 
 						   vtkLookupTable* pcLookupTable /* = NULL */,
 						   float fMinimum /* = 0 */, 
 						   float fMaximum /* = 0 */)
@@ -51,7 +51,8 @@ void CMapper::CreateMapper(vtkPolyData* pcPolyData,
 	if (m_pcPolyDataMapper) 
 		m_pcPolyDataMapper->Delete();
 	m_pcPolyDataMapper = vtkPolyDataMapper::New();
-	m_pcPolyDataMapper->SetInputData(pcPolyData);
+	// m_pcPolyDataMapper->SetInputConnection(pcPolyData->GetOutputPort());
+	m_pcPolyDataMapper->SetInputConnection(pcPolyData);
 	if (pcLookupTable)
 	{
 		m_pcPolyDataMapper->SetScalarModeToUsePointData();

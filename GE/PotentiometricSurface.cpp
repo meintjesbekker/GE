@@ -78,16 +78,16 @@ void CPotentiometricSurface::Update()
 	CreatePolyData(m_pcFloatPoints, m_pcCellArray, m_pcScalars);
 	CleanPolygonalData(m_pcPolyData);
 	Triangulate(m_bAverage);
-	Decimate(	(m_pcTriangleFilter) ? m_pcTriangleFilter->GetOutput() : NULL, 
+	Decimate(	(m_pcTriangleFilter) ? m_pcTriangleFilter->GetOutputPort() : NULL, 
 				m_bDecimate, 
 				m_fTargetReduction);
-	SmoothPolyData(	(m_pcTriangleFilter) ? m_pcTriangleFilter->GetOutput() : NULL, 
+	SmoothPolyData(	(m_pcTriangleFilter) ? m_pcTriangleFilter->GetOutputPort() : NULL, 
 					m_bSmooth, 
 					m_bDecimate, 
 					m_iNumberOfIterations, 
 					m_fRelaxationFactor);
-	ComputePolyDataNormals(	(m_pcTriangleFilter) ? m_pcTriangleFilter->GetOutput() : NULL, 
-							m_pcCleanPolyData->GetOutput(), 
+	ComputePolyDataNormals(	(m_pcTriangleFilter) ? m_pcTriangleFilter->GetOutputPort() : NULL, 
+							m_pcCleanPolyData->GetOutputPort(), 
 							m_bSmooth, 
 							m_bDecimate, 
 							m_bAverage);
@@ -100,7 +100,7 @@ void CPotentiometricSurface::Update()
 void CPotentiometricSurface::Clip()
 {
 	// if clip is check
-	DoClipPolyData(m_pcPolyDataNormals->GetOutput());
+	DoClipPolyData(m_pcPolyDataNormals->GetOutputPort());
 	CreateLookupTable();
 	CreateMapper();
 	RemoveActors();
@@ -504,12 +504,12 @@ void CPotentiometricSurface::CreateMapper()
 {	
 	CreateLookupTable();
 	if (m_pcModel->GetClip())
-		CMapper::CreateMapper(	m_pcClipPolyData->GetOutput(),
+		CMapper::CreateMapper(	m_pcClipPolyData->GetOutputPort(),
 								m_pcLookupTable,
 								m_pcColor->m_cColorTable.GetMinimumScalarValue(),
 								m_pcColor->m_cColorTable.GetMaximumScalarValue());
 	else
-		CMapper::CreateMapper(	m_pcPolyDataNormals->GetOutput(),
+		CMapper::CreateMapper(	m_pcPolyDataNormals->GetOutputPort(),
 								m_pcLookupTable,
 								m_pcColor->m_cColorTable.GetMinimumScalarValue(),
 								m_pcColor->m_cColorTable.GetMaximumScalarValue());

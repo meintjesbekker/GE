@@ -43,7 +43,7 @@ CClipPolyData::~CClipPolyData()
 /*--------------------------------------------------------------------------*/
 /* DoClipPolyData         													*/
 /*--------------------------------------------------------------------------*/
-void CClipPolyData::DoClipPolyData(vtkPolyData* pcPolyData)
+void CClipPolyData::DoClipPolyData(vtkAlgorithmOutput* pcPolyData)
 {
 	if (m_pcModel->GetClip())
 	{
@@ -62,7 +62,7 @@ void CClipPolyData::DoClipPolyData(vtkPolyData* pcPolyData)
 		if (m_pcClipPolyData) 
 			m_pcClipPolyData->Delete();
 		m_pcClipPolyData = vtkClipPolyData::New();
-		m_pcClipPolyData->SetInputData(pcPolyData);
+		m_pcClipPolyData->SetInputConnection(pcPolyData);
 		m_pcClipPolyData->SetClipFunction(m_pcPlane);
 		m_pcClipPolyData->GenerateClippedOutputOn();
 		m_pcClipPolyData->Update();

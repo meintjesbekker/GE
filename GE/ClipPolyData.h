@@ -25,7 +25,7 @@ public:
 
 // protected operations
 protected:
-	virtual void DoClipPolyData(vtkPolyData* pcPolyData);
+	virtual void DoClipPolyData(vtkAlgorithmOutput* pcPolyData);
 
 // protected attributes
 protected:

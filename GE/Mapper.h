@@ -26,7 +26,7 @@ public:
 // protected operations
 protected:
 	virtual void CreateDataSetMapper(vtkDataSet* pcDataSet, vtkLookupTable* pcLookupTable = NULL, float fMinimum = 0, float fMaximum = 0);
-	virtual void CreateMapper(vtkPolyData* pcPolyData, vtkLookupTable* pcLookupTable = NULL, float fMinimum = 0, float fMaximum = 0);
+	virtual void CreateMapper(vtkAlgorithmOutput* pcPolyData, vtkLookupTable* pcLookupTable = NULL, float fMinimum = 0, float fMaximum = 0);
 
 // protected attributes
 protected:

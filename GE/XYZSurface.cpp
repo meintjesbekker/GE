@@ -69,16 +69,16 @@ void CXYZSurface::Update()
 	CreateGeometryAndScalarDatasetAttribute(m_sPathName, m_pcColor);
 	CreateDataSet();
 	Triangulate(m_pcPolyData);
-	Decimate(	m_pcDelaunay2D->GetOutput(),
+	Decimate(	m_pcDelaunay2D->GetOutputPort(),
 				m_bDecimate, 
 				m_fTargetReduction);
-	SmoothPolyData(	m_pcDelaunay2D->GetOutput(), 
+	SmoothPolyData(	m_pcDelaunay2D->GetOutputPort(), 
 					m_bSmooth, 
 					m_bDecimate, 
 					m_iNumberOfIterations, 
 					m_fRelaxationFactor);
-	ComputePolyDataNormals(	m_pcDelaunay2D->GetOutput(), 
-							m_pcDelaunay2D->GetOutput(), 
+	ComputePolyDataNormals(	m_pcDelaunay2D->GetOutputPort(), 
+							m_pcDelaunay2D->GetOutputPort(), 
 							m_bSmooth, 
 							m_bDecimate, 
 							TRUE);
@@ -91,7 +91,7 @@ void CXYZSurface::Update()
 void CXYZSurface::Clip()
 {
 	// if clip is check
-	DoClipPolyData(m_pcPolyDataNormals->GetOutput());
+	DoClipPolyData(m_pcPolyDataNormals->GetOutputPort());
 	CreateMapper();
 	CreateActor();
 }
@@ -227,12 +227,12 @@ void CXYZSurface::CreateMapper()
 {
 	CreateLookupTable();
 	if (m_pcModel->GetClip())
-		CMapper::CreateMapper(	m_pcClipPolyData->GetOutput(),
+		CMapper::CreateMapper(	m_pcClipPolyData->GetOutputPort(),
 								m_pcLookupTable,
 								m_pcColor->m_cColorTable.GetMinimumScalarValue(),
 								m_pcColor->m_cColorTable.GetMaximumScalarValue());
 	else
-		CMapper::CreateMapper(	m_pcDelaunay2D->GetOutput(),
+		CMapper::CreateMapper(	m_pcDelaunay2D->GetOutputPort(),
 								m_pcLookupTable,
 								m_pcColor->m_cColorTable.GetMinimumScalarValue(),
 								m_pcColor->m_cColorTable.GetMaximumScalarValue());

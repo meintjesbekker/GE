@@ -386,9 +386,9 @@ void CHydraulicComponent::Clip()
 {
 	if (m_pcAppendPolyData->GetOutput()->GetNumberOfPolys() > 0
 		|| m_pcAppendPolyData->GetOutput()->GetNumberOfStrips() > 0)
-		DoClipPolyData(m_pcPolyDataNormals->GetOutput());
+		DoClipPolyData(m_pcPolyDataNormals->GetOutputPort());
 	else
-		DoClipPolyData(m_pcAppendPolyData->GetOutput());
+		DoClipPolyData(m_pcAppendPolyData->GetOutputPort());
 	CreateMapper();
 	CreateLODActor(m_pcPolyDataMapper, m_bVisible, 1, m_cColor);
 }
@@ -568,11 +568,11 @@ BOOL CHydraulicComponent::TestIfActiveCellGreater(float* pfArray, int iRowIndex,
 void CHydraulicComponent::CreateMapper()
 {
 	if (m_pcModel->GetClip())
-		CMapper::CreateMapper(m_pcClipPolyData->GetOutput());
+		CMapper::CreateMapper(m_pcClipPolyData->GetOutputPort());
 	else
 		if (m_pcAppendPolyData->GetOutput()->GetNumberOfPolys() > 0
 			|| m_pcAppendPolyData->GetOutput()->GetNumberOfStrips() > 0)
-			CMapper::CreateMapper(m_pcPolyDataNormals->GetOutput());
+			CMapper::CreateMapper(m_pcPolyDataNormals->GetOutputPort());
 		else
-			CMapper::CreateMapper(m_pcAppendPolyData->GetOutput());
+			CMapper::CreateMapper(m_pcAppendPolyData->GetOutputPort());
 }

@@ -27,9 +27,9 @@ public:
 
 // protected operations
 protected:
-	virtual void Decimate(vtkPolyData* pcPolyData, BOOL bDecimate, float fTargetReduction);
-	virtual void SmoothPolyData(vtkPolyData* pcPolyData, BOOL bSmooth, BOOL bDecimate, int iNumberOfIterations, float fRelaxationFactor);
-	virtual void ComputePolyDataNormals(vtkPolyData* pcPolyData, vtkPolyData* pcCleanPolyData, BOOL bSmooth, BOOL bDecimate, BOOL bAverage);
+	virtual void Decimate(vtkAlgorithmOutput* pcPolyData, BOOL bDecimate, float fTargetReduction);
+	virtual void SmoothPolyData(vtkAlgorithmOutput* pcPolyData, BOOL bSmooth, BOOL bDecimate, int iNumberOfIterations, float fRelaxationFactor);
+	virtual void ComputePolyDataNormals(vtkAlgorithmOutput* pcPolyData, vtkAlgorithmOutput* pcCleanPolyData, BOOL bSmooth, BOOL bDecimate, BOOL bAverage);
 
 // protected attributes
 protected:
