@@ -60,12 +60,10 @@ private:
 // private attributes		
 private:
 	BOOL m_Scaled;
-	double clippingrange[2];
-	double focalpoint[3];
-	double position[3];
-	double viewplanenormal[3];
-	double viewup[3];
-	double viewangle;
+	double m_Focalpoint[3];
+	double m_Position[3];
+	double m_Viewup[3];
+	double m_ViewAngle;
 
 	// outline and labeled axes
 	vtkOutlineSource* m_OutlineSource;

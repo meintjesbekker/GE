@@ -72,6 +72,9 @@ void CGeospatialModelForLayer::Update()
 							m_bDecimate, 
 							m_bAverage);
 	Clip();
+	// TODO: Figure a way to display the outlines of the cubes. 
+	// Extracting the edges do not work for it shows triangles of all quads.
+	// ExtractEdges();
 }
 
 /*--------------------------------------------------------------------------*/
@@ -82,6 +85,28 @@ void CGeospatialModelForLayer::Clip()
 	DoClipPolyData(m_pcPolyDataNormals->GetOutputPort());
 	CreateMapper();
 	CreateLODActor(m_pcPolyDataMapper, m_bVisible, m_fOpacity, m_cColor);
+}
+
+/*--------------------------------------------------------------------------*/
+/* ExtractEdges  															*/
+/* TODO:	This is not going to work. Eges are going to be triangular. 
+			Will need to create the grid lines explicity like you've done   
+			each grid cell.
+			There is also the problem that each pipeline one has got one 
+			actor. You therefore cannot just go and another actor.
+			*/
+/*--------------------------------------------------------------------------*/
+void CGeospatialModelForLayer::ExtractEdges()
+{
+	vtkSmartPointer<vtkExtractEdges> extractEdges = vtkSmartPointer<vtkExtractEdges>::New();
+	if (m_pcModel->GetClip())
+		extractEdges->SetInputConnection(m_pcClipPolyData->GetOutputPort());
+	else
+		extractEdges->SetInputConnection(m_pcPolyDataNormals->GetOutputPort());
+
+	vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+	mapper->SetInputConnection(extractEdges->GetOutputPort());
+	CreateLODActor(mapper, m_bVisible, m_fOpacity, RGB(255, 0, 0));
 }
 
 /*--------------------------------------------------------------------------*/

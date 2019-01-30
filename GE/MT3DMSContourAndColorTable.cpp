@@ -25,6 +25,12 @@ static char THIS_FILE[]=__FILE__;
 /*--------------------------------------------------------------------------*/
 CMT3DMSContourAndColorTable::CMT3DMSContourAndColorTable()
 {
+	m_fInterval = 0.0;
+	m_iNumberOfValuesAndColors = 0;
+	m_fMinimumScalarValue = 0.0;
+	m_fMaximumScalarValue = 0.0;
+	m_cMinimumScalarColor = COLORREF();
+	m_cMaximumScalarColor = COLORREF();
 }
 
 /*--------------------------------------------------------------------------*/

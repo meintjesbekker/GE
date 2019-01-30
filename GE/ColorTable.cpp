@@ -24,9 +24,12 @@ static char THIS_FILE[]=__FILE__;
 /*--------------------------------------------------------------------------*/
 CColorTable::CColorTable()
 {
+	m_fInterval = 0.0;
 	m_iNumberOfColors = 0;	
 	m_fMinimumScalarValue = 0;
 	m_fMaximumScalarValue = 0;
+	m_cMinimumScalarColor = COLORREF();
+	m_cMaximumScalarColor = COLORREF();
 }
 
 /*--------------------------------------------------------------------------*/

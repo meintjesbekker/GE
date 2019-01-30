@@ -29,9 +29,10 @@ IMPLEMENT_DYNCREATE(CVtkView, CView)
 /*--------------------------------------------------------------------------*/
 /* Construction                                                             */
 /*--------------------------------------------------------------------------*/
-CVtkView::CVtkView()
+CVtkView::CVtkView(): m_Focalpoint{0}, m_Position{0}, m_Viewup{0}
 {
 	m_Scaled = FALSE;
+	m_ViewAngle = 0.0;
 
 	// labeled axes
 	m_OutlineSource = NULL;
@@ -227,16 +228,16 @@ void CVtkView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 	{
 		m_Renderer->ResetCamera();
 		m_Renderer->ResetCameraClippingRange();
-		m_Renderer->GetActiveCamera()->GetFocalPoint(focalpoint);
-		m_Renderer->GetActiveCamera()->GetPosition(position);
-		m_Renderer->GetActiveCamera()->GetViewUp(viewup);
-		viewangle = m_Renderer->GetActiveCamera()->GetViewAngle();
+		m_Renderer->GetActiveCamera()->GetFocalPoint(m_Focalpoint);
+		m_Renderer->GetActiveCamera()->GetPosition(m_Position);
+		m_Renderer->GetActiveCamera()->GetViewUp(m_Viewup);
+		m_ViewAngle = m_Renderer->GetActiveCamera()->GetViewAngle();
 		m_Scaled = FALSE;
 	}
-	m_Renderer->GetActiveCamera()->SetFocalPoint(focalpoint);
-	m_Renderer->GetActiveCamera()->SetPosition(position);
-	m_Renderer->GetActiveCamera()->SetViewUp(viewup);
-	m_Renderer->GetActiveCamera()->SetViewAngle(viewangle);
+	m_Renderer->GetActiveCamera()->SetFocalPoint(m_Focalpoint);
+	m_Renderer->GetActiveCamera()->SetPosition(m_Position);
+	m_Renderer->GetActiveCamera()->SetViewUp(m_Viewup);
+	m_Renderer->GetActiveCamera()->SetViewAngle(m_ViewAngle);
 	m_Renderer->ResetCameraClippingRange();
 
 	// create the axes
@@ -266,20 +267,20 @@ LRESULT CVtkView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		case	WM_LBUTTONDOWN: 
 		case	WM_LBUTTONUP:
 				{
-					m_Renderer->GetActiveCamera()->GetFocalPoint(focalpoint);
-					m_Renderer->GetActiveCamera()->GetPosition(position);
-					m_Renderer->GetActiveCamera()->GetViewUp(viewup);
-					viewangle = m_Renderer->GetActiveCamera()->GetViewAngle();
+					m_Renderer->GetActiveCamera()->GetFocalPoint(m_Focalpoint);
+					m_Renderer->GetActiveCamera()->GetPosition(m_Position);
+					m_Renderer->GetActiveCamera()->GetViewUp(m_Viewup);
+					m_ViewAngle = m_Renderer->GetActiveCamera()->GetViewAngle();
 				}
 		case	WM_MBUTTONDOWN: 
 		case	WM_MBUTTONUP:
 		case	WM_RBUTTONDOWN: 
 		case	WM_RBUTTONUP:
 				{
-					m_Renderer->GetActiveCamera()->GetFocalPoint(focalpoint);
-					m_Renderer->GetActiveCamera()->GetPosition(position);
-					m_Renderer->GetActiveCamera()->GetViewUp(viewup);
-					viewangle = m_Renderer->GetActiveCamera()->GetViewAngle();
+					m_Renderer->GetActiveCamera()->GetFocalPoint(m_Focalpoint);
+					m_Renderer->GetActiveCamera()->GetPosition(m_Position);
+					m_Renderer->GetActiveCamera()->GetViewUp(m_Viewup);
+					m_ViewAngle = m_Renderer->GetActiveCamera()->GetViewAngle();
 				}
 		case	WM_MOUSEMOVE:
 		case	WM_CHAR:
@@ -496,9 +497,9 @@ void CVtkView::CreateColoredAxes()
 		m_pAxes = NULL;
 	}
 	m_pAxes = vtkAxes::New();
-    m_pAxes->SetOrigin(	GetDocument()->m_pcModel->GetMinimumXBound() * GetDocument()->m_pcModel->GetXScale(), 
-						GetDocument()->m_pcModel->GetMinimumYBound() * GetDocument()->m_pcModel->GetYScale(), 
-						GetDocument()->m_pcModel->GetMinimumZBound() * GetDocument()->m_pcModel->GetZScale());
+    m_pAxes->SetOrigin(	double(GetDocument()->m_pcModel->GetMinimumXBound()) * double(GetDocument()->m_pcModel->GetXScale()),
+						double(GetDocument()->m_pcModel->GetMinimumYBound()) * double(GetDocument()->m_pcModel->GetYScale()),
+						double(GetDocument()->m_pcModel->GetMinimumZBound()) * double(GetDocument()->m_pcModel->GetZScale()));
     m_pAxes->SetScaleFactor(fabs(GetDocument()->m_pcModel->GetMaximumXBound() - GetDocument()->m_pcModel->GetMinimumXBound()) / 7.0);
 	if (m_pTubeFilter)
 	{
@@ -571,8 +572,9 @@ BOOL CVtkView::OnPreparePrinting(CPrintInfo* pInfo)
 /*--------------------------------------------------------------------------*/
 void CVtkView::OnEditCopy() 
 {
-	LPBITMAPINFOHEADER lpbi; // pointer to BITMAPINFOHEADER
-	DWORD dwLen; // size of memory block
+	// TODO: Fix copy.
+	// LPBITMAPINFOHEADER lpbi; // pointer to BITMAPINFOHEADER
+	// DWORD dwLen; // size of memory block
 	HANDLE hDIB = NULL; // handle to DIB, temp handle
 	vtkWindow* vtkWin = m_RenderWindow;
 	int* size = vtkWin->GetSize();

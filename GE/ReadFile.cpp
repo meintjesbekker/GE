@@ -38,9 +38,9 @@ CReadFile::~CReadFile()
 void CReadFile::ReadTimeIndependentData(CString sFolderAndFileName, float* pfArray, int iNumberOfRows, int iNumberOfColumns, int iLayer)
 {
 	FILE* pFile;
-	pFile = fopen(sFolderAndFileName, "rb");
+	errno_t err = fopen_s(&pFile, sFolderAndFileName, "rb");
 	CString str;
-	if (!pFile)
+	if (err)
 	{
 		str.Format("Can not open the time independent data file.\nFile: %s.", sFolderAndFileName);
 		AfxMessageBox(str);		
@@ -60,15 +60,16 @@ void CReadFile::ReadTimeIndependentData(CString sFolderAndFileName, float* pfArr
 /*--------------------------------------------------------------------------*/
 void CReadFile::ReadTimeDependentData(CString sFolderAndFileName, int iStressPeriod, float* pfArray, int iNumberOfRows, int iNumberOfColumns, int iNumberOfLayers, int iLayer)
 {
-	FILE* pFile;
-	pFile = fopen(sFolderAndFileName, "rb");
+	FILE* pFile = NULL;
+	errno_t err = fopen_s(&pFile, sFolderAndFileName, "rb");
 	CString str;
-	if (!pFile)
+	if (err)
 	{
 		str.Format("Can not open the time independent data file.\nFile: %s.", sFolderAndFileName);
 		AfxMessageBox(str);
 	}
-	else
+	
+	if (pFile)
 	{
 		short int* ipStressPeriod = new short int[1000];
 		short int* ipPositionHeader = new short int[1000];
@@ -93,12 +94,14 @@ void CReadFile::ReadTimeDependentData(CString sFolderAndFileName, int iStressPer
 /*--------------------------------------------------------------------------*/
 BOOL CReadFile::FileExists(CString sFolderAndFileName)
 {
-	FILE* pFile = fopen(sFolderAndFileName, "r");
-	if (!pFile)
+	FILE* pFile = NULL;
+	errno_t err = fopen_s(&pFile, sFolderAndFileName, "r");
+	if (err)
 		return FALSE;
 	else
 	{
-		fclose(pFile);
+		if (pFile)
+			fclose(pFile);
 		return TRUE;
 	}
 }

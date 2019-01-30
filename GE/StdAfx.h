@@ -43,6 +43,7 @@ VTK_MODULE_INIT(vtkRenderingFreeType);
 #include "vtkDecimatePro.h"
 #include "vtkDelaunay2D.h"
 #include "vtkDoubleArray.h"
+#include "vtkExtractEdges.h"
 #include "vtkPoints.h"
 //#include "vtkDoubleArray.h"
 #include "vtkGeometryFilter.h"

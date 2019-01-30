@@ -23,6 +23,7 @@ static char THIS_FILE[]=__FILE__;
 /*--------------------------------------------------------------------------*/
 CMT3DMSLookupTable::CMT3DMSLookupTable()
 {
+	m_pcContourAndColorTable = NULL;
 }
 
 /*--------------------------------------------------------------------------*/

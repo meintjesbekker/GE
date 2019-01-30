@@ -35,6 +35,7 @@ CHydraulicComponents::CHydraulicComponents(CModel* pcModel /* = NULL */)
 	m_bVisible = TRUE;
 	m_bAverage = TRUE;
 	m_iStressPeriod = 1;
+	m_iNumberOfStressPeriods = 0;
 }
 
 /*--------------------------------------------------------------------------*/
@@ -63,9 +64,9 @@ void CHydraulicComponents::SetAverage(BOOL bAverage)
 void CHydraulicComponents::ReadTimeParameterFile()
 {
 	FILE* pFile;
-	pFile = fopen(m_pcModel->GetFolderAndFileName().SpanExcluding(".") + ".trn", "r");
+	errno_t err = fopen_s(&pFile, m_pcModel->GetFolderAndFileName().SpanExcluding(".") + ".trn", "r");
 	CString str;
-	if (!pFile)
+	if (err)
 	{
 		str.Format("Can not open the time parameter file.");
 		AfxMessageBox(str);		
@@ -74,7 +75,7 @@ void CHydraulicComponents::ReadTimeParameterFile()
 	{
 		int iThousandHeader;
 		int iTimeUnit;
-		fscanf(pFile, "%i %i", &iThousandHeader, &iTimeUnit); 
+		fscanf_s(pFile, "%i %i", &iThousandHeader, &iTimeUnit); 
 		int iActive; // active, -1 stress period in use, 1 not used
 		int iLength; // length
 		int iTimeSteps; // time steps
@@ -85,7 +86,7 @@ void CHydraulicComponents::ReadTimeParameterFile()
 		m_iNumberOfStressPeriods = 0;
 		for (int i = 1; i <= 1000; i++)
 		{
-			fscanf(pFile, "%i %i %i %i %i %i %i", &iActive, &iLength, &iTimeSteps, &iMultiplier, &iTransport, &iMax, &iMultiplierTransport);
+			fscanf_s(pFile, "%i %i %i %i %i %i %i", &iActive, &iLength, &iTimeSteps, &iMultiplier, &iTransport, &iMax, &iMultiplierTransport);
 			if (iActive == -1) // stress period in use
 				m_iNumberOfStressPeriods += 1;
 		}

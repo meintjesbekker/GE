@@ -21,7 +21,7 @@ static char THIS_FILE[] = __FILE__;
 /*--------------------------------------------------------------------------*/
 /* Construction                                                             */
 /*--------------------------------------------------------------------------*/
-CParameterGeneralGrid::CParameterGeneralGrid()
+CParameterGeneralGrid::CParameterGeneralGrid() : m_pcModel(), m_pcParameter()
 {
 }
 

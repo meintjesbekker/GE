@@ -23,6 +23,12 @@ static char THIS_FILE[] = __FILE__;
 /*--------------------------------------------------------------------------*/
 CVisualizeGrid::CVisualizeGrid()
 {
+	m_pcDoc = NULL;
+	m_iPrevRowHighLighted = 0;
+	m_iRowHighLighted = 0;
+	m_iNumberOfObjects = 0;
+	m_iColumn = 0;
+	m_bHighLight = FALSE;
 }
 
 /*--------------------------------------------------------------------------*/

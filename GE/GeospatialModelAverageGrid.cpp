@@ -24,6 +24,12 @@ static char THIS_FILE[] = __FILE__;
 /*--------------------------------------------------------------------------*/
 CGeospatialModelAverageGrid::CGeospatialModelAverageGrid()
 {
+	m_pcModel = NULL;
+	m_pcGeospatialModel = NULL;
+	m_lBorderWidth = 0;
+	m_lBorderHeight = 0;
+	m_iNumberOfLogPixelsX = 0;
+	m_iNumberOfLogPixelsY = 0;
 }
 
 /*--------------------------------------------------------------------------*/

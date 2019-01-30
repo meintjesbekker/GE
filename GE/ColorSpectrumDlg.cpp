@@ -26,6 +26,8 @@ CColorSpectrumDlg::CColorSpectrumDlg(CWnd* pParent /* = NULL */)
 {
 	//{{AFX_DATA_INIT(CColorSpectrumDlg)
 		// NOTE: the ClassWizard will add member initialization here
+	m_cMinimumColor = COLORREF();
+	m_cMaximumColor = COLORREF();
 	//}}AFX_DATA_INIT
 }
 

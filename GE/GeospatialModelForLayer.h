@@ -36,6 +36,7 @@ public:
 
 // private operations
 private:
+	void ExtractEdges();
 	void CreateMapper();
 	void CreateGeometry();
 	void CreateTopology();

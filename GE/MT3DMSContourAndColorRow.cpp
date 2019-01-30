@@ -23,6 +23,8 @@ static char THIS_FILE[]=__FILE__;
 /*--------------------------------------------------------------------------*/
 CMT3DMSContourAndColorRow::CMT3DMSContourAndColorRow()
 {
+	m_fValue = 0.0;
+	m_cColor = COLORREF();
 }
 
 /*--------------------------------------------------------------------------*/

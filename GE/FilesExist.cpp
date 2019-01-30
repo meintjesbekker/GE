@@ -85,8 +85,9 @@ void CFilesExist::SearchForFiles(CString sFolderPath, CString sPathName)
 /*--------------------------------------------------------------------------*/
 BOOL CFilesExist::FileExists(CString sPathAndFileName)
 {
-	FILE* pFile = fopen(sPathAndFileName, "r");
-	if (!pFile)
+	FILE* pFile;
+	errno_t err= fopen_s(&pFile, sPathAndFileName, "r");
+	if (err)
 		return FALSE;
 	else
 	{
