@@ -9,7 +9,7 @@
 /*	Notes	: Thesis, section 5.3 "Geospatial Model". Figure 5.8.          	*/
 /*--------------------------------------------------------------------------*/
 #include "stdafx.h"
-#include "GE.h"
+//#include "GE.h"
 #include "Average.h"
 
 #ifdef _DEBUG

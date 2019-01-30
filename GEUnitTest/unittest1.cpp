@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
+#include "../GE/Average.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -68,9 +69,9 @@ namespace GEUnitTest
 
 		TEST_METHOD(Method4)
 		{
-			//CAverage AverageGenerator;
-			//float average = AverageGenerator.GetAverage();
-			//Assert::AreEqual(float(0.0), average);
+			CAverage AverageGenerator;
+			float average = AverageGenerator.GetAverage();
+			Assert::AreEqual(float(0.0), average);
 		}
 
 	};
