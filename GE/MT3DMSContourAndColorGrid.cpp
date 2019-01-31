@@ -9,7 +9,7 @@
 /*	Notes	: User's Guide, section 3.6.2 "Contour and Color".				*/
 /*--------------------------------------------------------------------------*/
 #include "stdafx.h"
-#include "GE.h"
+//#include "GE.h"
 #include "MT3DMSContourAndColorGrid.h"
 #include "ColorLevelDlg.h"
 #include "ColorSpectrumDlg.h"
@@ -25,7 +25,12 @@ static char THIS_FILE[] = __FILE__;
 /*--------------------------------------------------------------------------*/
 CMT3DMSContourAndColorGrid::CMT3DMSContourAndColorGrid()
 {
+	m_lBorderWidth = 0;
+	m_lBorderHeight = 0;
+	m_iLogPixelsX = 0;
+	m_iLogPixelsY = 0;
 	m_iRowSelected = 1;
+	m_pcMT3DMSContourAndColorTable = NULL;
 }
 
 /*--------------------------------------------------------------------------*/

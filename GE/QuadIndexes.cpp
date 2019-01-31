@@ -9,7 +9,7 @@
 /*	Notes	: Thesis, section 5.3 "Geospatial Model".                       */
 /*--------------------------------------------------------------------------*/
 #include "stdafx.h"
-#include "GE.h"
+//#include "GE.h"
 #include "QuadIndexes.h"
 
 #ifdef _DEBUG

@@ -9,7 +9,7 @@
 /*	Notes	: User's Guide, section 3.6.2 "Contour and Color".				*/
 /*--------------------------------------------------------------------------*/
 #include "stdafx.h"
-#include "GE.h"
+//#include "GE.h"
 #include "MT3DMSContourAndColorRow.h"
 
 #ifdef _DEBUG

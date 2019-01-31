@@ -9,7 +9,7 @@
 /*	Notes	: Thesis, section 4.5.6 "Actor".                   				*/
 /*--------------------------------------------------------------------------*/
 #include "stdafx.h"
-#include "GE.h"
+//#include "GE.h"
 #include "Actor.h"
 
 #ifdef _DEBUG

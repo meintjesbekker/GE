@@ -9,7 +9,7 @@
 /*	Notes	:                                                 				*/
 /*--------------------------------------------------------------------------*/
 #include "stdafx.h"
-#include "GE.h"
+//#include "GE.h"
 #include "FilesExist.h"
 
 #ifdef _DEBUG
@@ -91,7 +91,8 @@ BOOL CFilesExist::FileExists(CString sPathAndFileName)
 		return FALSE;
 	else
 	{
-		fclose(pFile);
+		if (pFile != NULL)
+			fclose(pFile);
 		return TRUE;
 	}
 }

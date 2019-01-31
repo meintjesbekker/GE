@@ -10,7 +10,7 @@
 /*	Notes	: User's Guide, section 3.4 "Potentiometric Surface".           */
 /*--------------------------------------------------------------------------*/
 #include "stdafx.h"
-#include "GE.h"
+//#include "GE.h"
 #include "PotentiometricSurfaceGUI.h"
 
 #ifdef _DEBUG

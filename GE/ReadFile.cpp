@@ -9,7 +9,7 @@
 /*	Notes	:                                                 				*/
 /*--------------------------------------------------------------------------*/
 #include "stdafx.h"
-#include "GE.h"
+//#include "GE.h"
 #include "ReadFile.h"
 
 #ifdef _DEBUG
@@ -37,21 +37,24 @@ CReadFile::~CReadFile()
 /*--------------------------------------------------------------------------*/
 void CReadFile::ReadTimeIndependentData(CString sFolderAndFileName, float* pfArray, int iNumberOfRows, int iNumberOfColumns, int iLayer)
 {
-	FILE* pFile;
+	FILE* pFile = NULL;
 	errno_t err = fopen_s(&pFile, sFolderAndFileName, "rb");
 	CString str;
 	if (err)
 	{
-		str.Format("Can not open the time independent data file.\nFile: %s.", sFolderAndFileName);
+		str.Format("Can not open the time independent data file.\nFile: %s.", sFolderAndFileName.GetString());
 		AfxMessageBox(str);		
 	}
 	else
 	{
-		// skip the stress period and position header = 4000 bytes
-		// number of bytes for each iLayer = NI*NJ*4
-		fseek(pFile, 4000 + ((iLayer - 1)*iNumberOfRows*iNumberOfColumns*4), SEEK_SET);
-		fread(pfArray, 4, iNumberOfRows*iNumberOfColumns, pFile);
-		fclose(pFile);
+		if (pFile != NULL) 
+		{
+			// skip the stress period and position header = 4000 bytes
+			// number of bytes for each iLayer = NI*NJ*4
+			fseek(pFile, 4000 + ((iLayer - 1)*iNumberOfRows*iNumberOfColumns * 4), SEEK_SET);
+			fread(pfArray, 4, iNumberOfRows*iNumberOfColumns, pFile);
+			fclose(pFile);
+		}
 	}
 }
 
@@ -65,7 +68,7 @@ void CReadFile::ReadTimeDependentData(CString sFolderAndFileName, int iStressPer
 	CString str;
 	if (err)
 	{
-		str.Format("Can not open the time independent data file.\nFile: %s.", sFolderAndFileName);
+		str.Format("Can not open the time independent data file.\nFile: %s.", sFolderAndFileName.GetString());
 		AfxMessageBox(str);
 	}
 	
@@ -85,7 +88,8 @@ void CReadFile::ReadTimeDependentData(CString sFolderAndFileName, int iStressPer
 				iPosition = i;
 		fseek(pFile, 4000 + (iPosition * iNumberOfLayers + (iLayer - 1)) * iNumberOfRows * iNumberOfColumns * 4, SEEK_SET);
 		fread(pfArray, 4, iNumberOfRows * iNumberOfColumns, pFile);
-		fclose(pFile);
+		if (pFile != NULL)
+			fclose(pFile);
 	}
 }
 
@@ -100,7 +104,7 @@ BOOL CReadFile::FileExists(CString sFolderAndFileName)
 		return FALSE;
 	else
 	{
-		if (pFile)
+		if (pFile != NULL)
 			fclose(pFile);
 		return TRUE;
 	}

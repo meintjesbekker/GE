@@ -26,6 +26,7 @@ CMT3DMSContourAndColorAddDlg::CMT3DMSContourAndColorAddDlg(CWnd* pParent /* = NU
 {
 	//{{AFX_DATA_INIT(CMT3DMSContourAndColorAddDlg)
 	m_fValue = 0.0f;
+	m_cColor = COLORREF();
 	//}}AFX_DATA_INIT
 }
 

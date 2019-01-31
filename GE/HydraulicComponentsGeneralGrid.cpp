@@ -23,6 +23,7 @@ static char THIS_FILE[] = __FILE__;
 /*--------------------------------------------------------------------------*/
 CHydraulicComponentsGeneralGrid::CHydraulicComponentsGeneralGrid()
 {
+	m_pcHydraulicComponents = NULL;
 }
 
 /*--------------------------------------------------------------------------*/

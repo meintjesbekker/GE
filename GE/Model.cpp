@@ -9,7 +9,7 @@
 /*	Notes	:                                                 				*/
 /*--------------------------------------------------------------------------*/
 #include "stdafx.h"
-#include "GE.h"
+//#include "GE.h"
 #include "GeospatialModel.h"
 #include "Model.h"
 
@@ -103,16 +103,16 @@ CModel::~CModel()
 void CModel::ReadPM5File()
 {
 	CString sString;
-	FILE* pFile;
-	char cBufferArray[256];
-	pFile = fopen(m_sFolderAndFileName.SpanExcluding(".") + ".pm5", "r");
-	if (!pFile)
+	FILE* pFile = NULL;
+	errno_t err = fopen_s(&pFile, m_sFolderAndFileName.SpanExcluding(".") + ".pm5", "r");
+	if (err)
 	{
 		sString.Format("Cann't open the *.PM5 file.");
 		AfxMessageBox(sString);		
 	}
 	else
 	{
+		char cBufferArray[256];
 		while (fgets(cBufferArray, 255, pFile) != NULL)
 		{
 			sString.Format(cBufferArray);
@@ -139,7 +139,8 @@ void CModel::ReadPM5File()
 			if (sString.Find("CINACT", 0) != -1)
 				m_fConcentrationInactive = atof(sString.Mid(sString.Find('=')+1));
 		}
-		fclose(pFile);
+		if (pFile != NULL)
+			fclose(pFile);
 	}
 }
 

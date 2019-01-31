@@ -9,7 +9,7 @@
 /*	Notes	: Thesis, section 5.7 "Hydraulic Components".                   */
 /*--------------------------------------------------------------------------*/
 #include "stdafx.h"
-#include "GE.h"
+//#include "GE.h"
 #include "ColorPage.h"
 #include "HydraulicComponents.h"
 #include "HydraulicComponentsSheet.h"
@@ -73,24 +73,27 @@ void CHydraulicComponents::ReadTimeParameterFile()
 	}
 	else
 	{
-		int iThousandHeader;
-		int iTimeUnit;
-		fscanf_s(pFile, "%i %i", &iThousandHeader, &iTimeUnit); 
-		int iActive; // active, -1 stress period in use, 1 not used
-		int iLength; // length
-		int iTimeSteps; // time steps
-		int iMultiplier; // multiplier (flow)
-		int iTransport; // transport stepsize
-		int iMax; // max. no. of transport steps
-		int iMultiplierTransport; // multiplier (transport)
-		m_iNumberOfStressPeriods = 0;
-		for (int i = 1; i <= 1000; i++)
+		if (pFile != NULL)
 		{
-			fscanf_s(pFile, "%i %i %i %i %i %i %i", &iActive, &iLength, &iTimeSteps, &iMultiplier, &iTransport, &iMax, &iMultiplierTransport);
-			if (iActive == -1) // stress period in use
-				m_iNumberOfStressPeriods += 1;
+			int iThousandHeader;
+			int iTimeUnit;
+			fscanf_s(pFile, "%i %i", &iThousandHeader, &iTimeUnit);
+			int iActive; // active, -1 stress period in use, 1 not used
+			int iLength; // length
+			int iTimeSteps; // time steps
+			int iMultiplier; // multiplier (flow)
+			int iTransport; // transport stepsize
+			int iMax; // max. no. of transport steps
+			int iMultiplierTransport; // multiplier (transport)
+			m_iNumberOfStressPeriods = 0;
+			for (int i = 1; i <= 1000; i++)
+			{
+				fscanf_s(pFile, "%i %i %i %i %i %i %i", &iActive, &iLength, &iTimeSteps, &iMultiplier, &iTransport, &iMax, &iMultiplierTransport);
+				if (iActive == -1) // stress period in use
+					m_iNumberOfStressPeriods += 1;
+			}
+			fclose(pFile);
 		}
-		fclose(pFile);
 	}
 }
 

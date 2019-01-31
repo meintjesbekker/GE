@@ -9,7 +9,7 @@
 /*	Notes	: User's Guide, section 3.3.1 "General".          				*/
 /*--------------------------------------------------------------------------*/
 #include "stdafx.h"
-#include "GE.h"
+//#include "GE.h"
 #include "ColorSpectrum.h"
 #include "ColorSpectrumDlg.h"
 

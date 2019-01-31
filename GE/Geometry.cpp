@@ -9,7 +9,7 @@
 /*	Notes	: Thesis, Chapter 5.                 							*/
 /*--------------------------------------------------------------------------*/
 #include "stdafx.h"
-#include "GE.h"
+//#include "GE.h"
 #include "Geometry.h"
 
 #ifdef _DEBUG

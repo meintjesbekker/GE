@@ -13,6 +13,7 @@
 
 #if _MSC_VER > 1000
 #pragma once
+#include "resource.h"
 #include "HydraulicComponents.h"
 #include "HydraulicComponentsGeneralGrid.h"
 #endif 
