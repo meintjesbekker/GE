@@ -24,7 +24,7 @@ public:
 
 // public attributes
 public:
-	int iP[iN_POINTS];
+	int iP[iN_POINTS] = {0};
 };
 
 #endif // !defined(AFX_QUADINDEXES_H__FE5A77B1_893C_11D4_B310_0060084B410C__INCLUDED_)

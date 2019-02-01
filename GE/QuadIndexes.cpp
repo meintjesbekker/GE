@@ -23,8 +23,9 @@ static char THIS_FILE[]=__FILE__;
 /*--------------------------------------------------------------------------*/
 CQuadIndexes::CQuadIndexes()
 {
-	for (int i = 0; i < iN_POINTS; i++)
-		iP[i] = 0;
+	// TODO: Not necassary anymore for done in header.
+	//for (int i = 0; i < iN_POINTS; i++)
+	//	iP[i] = 0;
 }
 
 /*--------------------------------------------------------------------------*/
