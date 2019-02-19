@@ -47,7 +47,7 @@ void AFXAPI DDV_Interval(HWND hWnd, CDataExchange* pDX, float fMinimum, float fM
 	if (fInterval < 0 || fInterval > (fMaximum - fMinimum))
 	{
 		CString str;
-		str.Format(_T("Please enter a value from 0 to %f."), fMaximum - fMinimum);
+		str.Format(_T("Please enter a value from 0 to %f."), double(fMaximum) - double(fMinimum));
 		::MessageBox(hWnd, str, "Error", MB_ICONEXCLAMATION);
 		pDX->Fail();
 	}

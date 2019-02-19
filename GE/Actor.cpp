@@ -28,6 +28,7 @@ CActor::CActor(CModel* pcModel /* = NULL */)
 	// vtk
 	m_pcActor = NULL;
 	m_pcLODActor = NULL;
+	m_pcActor2D = NULL;
 }
 
 /*--------------------------------------------------------------------------*/
@@ -39,6 +40,8 @@ CActor::~CActor()
 		m_pcActor->Delete();
 	if (m_pcLODActor)
 		m_pcLODActor->Delete();
+	if (m_pcActor2D)
+		m_pcActor2D->Delete();
 }
 
 /*--------------------------------------------------------------------------*/
@@ -73,6 +76,19 @@ void CActor::CreateLODActor(vtkMapper* pcMapper, BOOL bVisible, float fOpacity, 
 }
 
 /*--------------------------------------------------------------------------*/
+/* CreateLODActor         													*/
+/*--------------------------------------------------------------------------*/
+void CActor::CreateScalarBarActor(vtkMapper* pcMapper)
+{
+	if (m_pcActor2D)
+		m_pcActor2D->Delete();
+	m_pcActor2D = vtkScalarBarActor::New();
+	m_pcActor2D->SetLookupTable(pcMapper->GetLookupTable());
+	m_pcActor2D->SetTitle("Legend");
+	m_pcActor2D->SetNumberOfLabels(20);
+}
+
+/*--------------------------------------------------------------------------*/
 /* SetActorProperties     													*/
 /*--------------------------------------------------------------------------*/
 void CActor::SetActorProperties(vtkActor* pcActor, vtkMapper* pcMapper, BOOL bVisible, float fOpacity, COLORREF cColor)
@@ -91,6 +107,11 @@ void CActor::SetActorProperties(vtkActor* pcActor, vtkMapper* pcMapper, BOOL bVi
 		float fBlue = GetBValue(cColor) / 255.0;
 		pcActor->GetProperty()->SetColor(fRed, fGreen, fBlue);
 	}
+
+	// TODO: Try this out to see what it looks like. This unfortunately does triangles and not quads!
+	// pcActor->GetProperty()->SetEdgeVisibility(1);
+	// pcActor->GetProperty()->SetEdgeColor(0.9, 0.9, 0.4);
+
 	pcActor->Modified();
 }
 

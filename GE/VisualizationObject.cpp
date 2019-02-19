@@ -32,6 +32,8 @@ CVisualizationObject::CVisualizationObject()
 	m_bVisible = TRUE;
 	m_sDescription = _T("");
 	m_pActorCollection = vtkActorCollection::New();
+	m_pActor2DCollection = vtkActor2DCollection::New();
+	m_pPropCollection = vtkPropCollection::New();
 }
 
 /*--------------------------------------------------------------------------*/
@@ -41,6 +43,12 @@ CVisualizationObject::~CVisualizationObject()
 {
 	if (m_pActorCollection)
 		m_pActorCollection->Delete();
+
+	if (m_pActor2DCollection)
+		m_pActor2DCollection->Delete();
+
+	if (m_pPropCollection)
+		m_pPropCollection->Delete();
 }
 
 /*--------------------------------------------------------------------------*/

@@ -316,6 +316,9 @@ void CVisualizeDlg::UpdateMenuUI(CWnd* pOwner, CMenu* pMenu, BOOL bAutoMenuEnabl
 	ASSERT_VALID( pOwner );
 	ASSERT( pMenu != NULL );
 
+	if (pMenu == NULL)
+		return;
+
 	// Create and initialize the famous CCmdUI object
 	CCmdUI state;
 	state.m_pMenu = pMenu;
@@ -325,7 +328,7 @@ void CVisualizeDlg::UpdateMenuUI(CWnd* pOwner, CMenu* pMenu, BOOL bAutoMenuEnabl
 	// determine if menu is popup in top-level menu and set m_pOther to
 	// it if so (m_pParentMenu == NULL indicates that it is secondary popup)
 	HMENU hParentMenu;
-	if (AfxGetThreadState()->m_hTrackingMenu == pMenu->m_hMenu)
+	if (pMenu && AfxGetThreadState()->m_hTrackingMenu == pMenu->m_hMenu)
 		state.m_pParentMenu = pMenu;    // parent == child for tracking popup
 	else if ((hParentMenu = ::GetMenu(pOwner->m_hWnd)) != NULL)
 	{

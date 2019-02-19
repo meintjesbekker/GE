@@ -47,6 +47,10 @@ END_MESSAGE_MAP()
 void CMenuButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
     ASSERT(lpDrawItemStruct != NULL);
+
+	if (lpDrawItemStruct == NULL)
+		return;
+
     CRect cRect = lpDrawItemStruct->rcItem;
     CDC* pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
     UINT uiState = lpDrawItemStruct->itemState;

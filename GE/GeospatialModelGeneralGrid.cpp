@@ -218,6 +218,9 @@ void CGeospatialModelGeneralGrid::OnClickGrid()
 void CGeospatialModelGeneralGrid::OnKeyPressGrid(short FAR* KeyAscii) 
 {	
 	ASSERT (KeyAscii != NULL);
+
+	if (KeyAscii == NULL)
+		return;
 	
 	// column 1
 	if (GetCol() == 1)

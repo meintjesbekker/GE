@@ -85,6 +85,7 @@ void CGeospatialModelForLayer::Clip()
 	DoClipPolyData(m_pcPolyDataNormals->GetOutputPort());
 	CreateMapper();
 	CreateLODActor(m_pcPolyDataMapper, m_bVisible, m_fOpacity, m_cColor);
+	CreateScalarBarActor(m_pcPolyDataMapper);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -94,6 +95,8 @@ void CGeospatialModelForLayer::Clip()
 			each grid cell.
 			There is also the problem that each pipeline one has got one 
 			actor. You therefore cannot just go and another actor.
+			You don't even need to do this. You can just switch it on.
+			Look for another TODO.
 			*/
 /*--------------------------------------------------------------------------*/
 void CGeospatialModelForLayer::ExtractEdges()
@@ -158,3 +161,15 @@ void CGeospatialModelForLayer::CreateTopology()
 	if (GetVisibilitySides())
 		CreateSidesTopology(m_pcCellArray, m_bAverage);
 }
+
+///*--------------------------------------------------------------------------*/
+///* CreateScalarBarActor                                                     */
+///*--------------------------------------------------------------------------*/
+//void CGeospatialModelForLayer::CreateScalarBarActor()
+//{
+//	vtkSmartPointer<vtkScalarBarActor> scalarBar = vtkSmartPointer<vtkScalarBarActor>::New();
+//	scalarBar->SetLookupTable(m_pcPolyDataMapper->GetLookupTable());
+//	scalarBar->SetTitle("Title");
+//	scalarBar->SetNumberOfLabels(4);
+//	// m_Renderer->AddActor2D(scalarBar);
+//}

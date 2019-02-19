@@ -24,6 +24,7 @@ public:
 	virtual ~CActor();
 	vtkActor* GetActor() const {return m_pcActor;};
 	vtkLODActor* GetLODActor() const {return m_pcLODActor;};
+	vtkActor2D* GetActor2D() const { return m_pcActor2D; };
 
 // protected operations
 protected:
@@ -31,6 +32,7 @@ protected:
 	virtual void UpdateActor(BOOL bVisible, COLORREF cColor);
 	virtual void CreateLODActor(vtkMapper* pcMapper, BOOL bVisible, float fOpacity, COLORREF cColor = -1);
 	virtual void UpdateLODActor(BOOL bVisible, COLORREF cColor);
+	virtual void CreateScalarBarActor(vtkMapper* pcMapper);
 
 // private operations
 private:
@@ -42,6 +44,7 @@ protected:
 	// vtk 
 	vtkActor* m_pcActor;
 	vtkLODActor* m_pcLODActor;
+	vtkScalarBarActor* m_pcActor2D;
 
 	// pointer to model object
 	CModel*	m_pcModel;

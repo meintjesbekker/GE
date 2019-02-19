@@ -213,12 +213,18 @@ void CVtkView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		// visualization object
 		for (int i = 0; i < GetDocument()->m_pcVisualization->m_pcVisualizationObjectArray.GetSize(); i++)
 		{
-			if (GetDocument()->m_pcVisualization->m_pcVisualizationObjectArray.GetAt(i)->GetVisibility())
+			CVisualizationObject* visualization_object = GetDocument()->m_pcVisualization->m_pcVisualizationObjectArray.GetAt(i);
+			if (visualization_object->GetVisibility())
 			{
 				vtkActor* anActor;
-				for (GetDocument()->m_pcVisualization->m_pcVisualizationObjectArray.GetAt(i)->GetActorCollection()->InitTraversal();
-					(anActor = GetDocument()->m_pcVisualization->m_pcVisualizationObjectArray.GetAt(i)->GetActorCollection()->GetNextActor());)
-						m_Renderer->AddActor(anActor);
+				for (visualization_object->GetActorCollection()->InitTraversal();
+					(anActor = visualization_object->GetActorCollection()->GetNextActor());)
+					m_Renderer->AddActor(anActor);
+
+				vtkActor2D* anActor2D;
+				for (visualization_object->GetActor2DCollection()->InitTraversal();
+					(anActor2D = visualization_object->GetActor2DCollection()->GetNextActor2D());)
+					m_Renderer->AddActor2D(anActor2D);
 			}
 		}
 	}

@@ -40,6 +40,7 @@ private:
 	void CreateMapper();
 	void CreateGeometry();
 	void CreateTopology();
+	// void CreateScalarBarActor();
 
 // private attributes
 private:

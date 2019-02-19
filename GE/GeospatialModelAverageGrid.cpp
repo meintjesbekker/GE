@@ -257,7 +257,10 @@ void CGeospatialModelAverageGrid::OnSetFocus(CWnd* pOldWnd)
 /*--------------------------------------------------------------------------*/
 void CGeospatialModelAverageGrid::OnKeyPressGrid(short FAR* KeyAscii) 
 {	
-	ASSERT (KeyAscii != NULL);
+	ASSERT(KeyAscii != NULL);
+
+	if (KeyAscii == NULL)
+		return;
 	
 	// column 1
 	if (GetCol() == 1)
@@ -318,7 +321,7 @@ void CGeospatialModelAverageGrid::OnKeyPressGrid(short FAR* KeyAscii)
 	if (GetCol() == 3)
 	{
 		m_cTargetReductionEdit.SetWindowText(GetText());
-		if (*KeyAscii == 13)
+		if (KeyAscii && *KeyAscii == 13)
 			m_cTargetReductionEdit.SetSel(0,-1);
 		else
 		{
@@ -364,7 +367,7 @@ void CGeospatialModelAverageGrid::OnKeyPressGrid(short FAR* KeyAscii)
 	if (GetCol() == 5)
 	{
 		m_cIterationsEdit.SetWindowText(GetText());
-		if (*KeyAscii == 13)
+		if (KeyAscii && *KeyAscii == 13)
 			m_cIterationsEdit.SetSel(0, -1);
 		else
 		{

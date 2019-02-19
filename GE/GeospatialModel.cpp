@@ -124,7 +124,7 @@ void CGeospatialModel::Create()
 	for (int numbLayers = 1; numbLayers <= m_pcModel->GetNumberOfLayers(); numbLayers++)
 	{
 		wndProgress.StepIt();
-	    CGeospatialModelForLayer * iLayer = new CGeospatialModelForLayer(m_pcModel, numbLayers);
+	    CGeospatialModelForLayer* iLayer = new CGeospatialModelForLayer(m_pcModel, numbLayers);
 		iLayer->SetColor(GetSpectrumColor(numbLayers));
 		m_pLayerArray.Add(iLayer);
 	}
@@ -139,7 +139,10 @@ void CGeospatialModel::Create()
 	// remove actors
 	RemoveActors();
 	for (int i = 0; i < m_pLayerArray.GetSize(); i++)
+	{
 		AddActor(m_pLayerArray[i]->GetLODActor());
+		AddActor2D(m_pLayerArray[i]->GetActor2D());
+	}
 
 	// ensures that idle message is displayed again
 	pMainFrame->PostMessage(WM_SETMESSAGESTRING, (WPARAM) AFX_IDS_IDLEMESSAGE, 0L);

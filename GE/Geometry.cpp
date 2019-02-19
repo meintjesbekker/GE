@@ -157,7 +157,7 @@ void CGeometry::CreateMiddleGeometry(int iNumberOfPoints /* = 1 */)
 				for (int k = 1; k <= iNumberOfPoints; k++)
 					m_pcFloatPoints->InsertNextPoint(	m_pcModelInfo->GetMiddleColumnCoordinate(j), 
 														m_pcModelInfo->GetMiddleRowCoordinate(i),
-														pfBottomArray[i * m_pcModelInfo->GetNumberOfColumns() + j] + k * zIncrement);
+														pfBottomArray[i * m_pcModelInfo->GetNumberOfColumns() + j] + double(k) * zIncrement);
 			 }
 		delete [] pfTopArray;
 		delete [] pfBottomArray;

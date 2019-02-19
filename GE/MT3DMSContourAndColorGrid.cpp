@@ -242,7 +242,11 @@ void CMT3DMSContourAndColorGrid::OnClickGrid()
 /*--------------------------------------------------------------------------*/
 void CMT3DMSContourAndColorGrid::OnKeyPressGrid(short FAR* KeyAscii) 
 {	
-	ASSERT (KeyAscii != NULL);
+	ASSERT(KeyAscii != NULL);
+
+	if (KeyAscii == NULL)
+		return;
+
 	if (GetCol() == 1)
 	{
 		m_cEdit.SetWindowText(GetText());

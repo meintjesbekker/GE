@@ -34,14 +34,16 @@ public:
 	void SetDescription(CString sDescription) {m_sDescription = sDescription;};
 	
 	// remove actors
-	void RemoveActors() {m_pActorCollection->RemoveAllItems();};
+	void RemoveActors() { m_pActorCollection->RemoveAllItems(); };
 	
 	// add actor
-	void AddActor(vtkActor* pActor) {m_pActorCollection->AddItem(pActor);};
-	void AddActor(vtkLODActor* pLODActor) {m_pActorCollection->AddItem(pLODActor);};
+	void AddActor(vtkActor* pActor) { m_pActorCollection->AddItem(pActor); };
+	void AddActor(vtkLODActor* pLODActor) { m_pActorCollection->AddItem(pLODActor); };
+	void AddActor2D(vtkActor2D* pActor2D) { m_pActor2DCollection->AddItem(pActor2D); }
 	
 	// get actors
-	vtkActorCollection* GetActorCollection() const {return m_pActorCollection;};
+	vtkActorCollection* GetActorCollection() const { return m_pActorCollection; };
+	vtkActor2DCollection* GetActor2DCollection() const { return m_pActor2DCollection; };
 
 	// intitialize, create, update, clip
 	virtual void Initialize() {};
@@ -64,6 +66,8 @@ protected:
 private:
 	CString m_sDescription;
 	vtkActorCollection* m_pActorCollection;
+	vtkActor2DCollection* m_pActor2DCollection;
+	vtkPropCollection* m_pPropCollection;
 };
 
 #endif // !defined(AFX_VISUALIZATIONOBJECT_H__84AAFDA5_5D3D_11D4_B2AC_0060084B410C__INCLUDED_)
