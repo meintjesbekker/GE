@@ -38,6 +38,7 @@ VTK_MODULE_INIT(vtkRenderingFreeType);
 #include "vtkCellData.h"
 #include "vtkCleanPolyData.h"
 #include "vtkClipPolyData.h"
+#include "vtkColorSeries.h"
 #include "vtkContourFilter.h"
 #include "vtkCubeAxesActor2D.h"
 #include "vtkDataSetMapper.h"

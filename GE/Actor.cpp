@@ -80,12 +80,36 @@ void CActor::CreateLODActor(vtkMapper* pcMapper, BOOL bVisible, float fOpacity, 
 /*--------------------------------------------------------------------------*/
 void CActor::CreateScalarBarActor(vtkMapper* pcMapper)
 {
+	vtkSmartPointer <vtkLookupTable> lut = vtkSmartPointer<vtkLookupTable>::New();
+
+	// Make the lookup table.
+	vtkSmartPointer<vtkColorSeries> colorSeries = vtkSmartPointer<vtkColorSeries>::New();
+	// Select a color scheme.
+	int colorSeriesEnum;
+	// colorSeriesEnum = colorSeries->BREWER_DIVERGING_BROWN_BLUE_GREEN_9;
+	// colorSeriesEnum = colorSeries->BREWER_DIVERGING_SPECTRAL_10;
+	// colorSeriesEnum = colorSeries->BREWER_DIVERGING_SPECTRAL_3;
+	// colorSeriesEnum = colorSeries->BREWER_DIVERGING_PURPLE_ORANGE_9;
+	// colorSeriesEnum = colorSeries->BREWER_SEQUENTIAL_BLUE_PURPLE_9;
+	// colorSeriesEnum = colorSeries->BREWER_SEQUENTIAL_BLUE_GREEN_9;
+	colorSeriesEnum = colorSeries->BREWER_QUALITATIVE_SET3;
+	// colorSeriesEnum = colorSeries->CITRUS;
+	colorSeries->SetColorScheme(colorSeriesEnum);
+	colorSeries->BuildLookupTable(lut);
+	lut->SetNanColor(1, 0, 0, 1);
+
 	if (m_pcActor2D)
 		m_pcActor2D->Delete();
 	m_pcActor2D = vtkScalarBarActor::New();
 	m_pcActor2D->SetLookupTable(pcMapper->GetLookupTable());
+	//m_pcActor2D->SetLookupTable(lut);
 	m_pcActor2D->SetTitle("Legend");
-	m_pcActor2D->SetNumberOfLabels(20);
+	m_pcActor2D->SetNumberOfLabels(2);
+	m_pcActor2D->GetPositionCoordinate()->SetCoordinateSystemToNormalizedViewport();
+	m_pcActor2D->GetPositionCoordinate()->SetValue(0.1, 0.01);
+	m_pcActor2D->SetOrientationToHorizontal();
+	m_pcActor2D->SetWidth(0.8);
+	m_pcActor2D->SetHeight(0.1);
 }
 
 /*--------------------------------------------------------------------------*/
